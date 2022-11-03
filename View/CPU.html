@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+        li {
+            text-decoration: none;
+            list-style: none;
+            line-height: 16px;
+        }
+        .cpu {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(214, 111, 14, 0.1);
+            color:#333;
+        }
+        .cpuname {
+            flex: 1;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            margin: 0 64px 0 64px ;
+        }
+        .cpuvalue {
+            flex: 1;
+            flex-wrap: nowrap;
+            /* justify-content: flex-end; */
+        }
+        .header {
+            display: flex;
+            font-weight: 600;
+            background-color: rgba(214, 27, 14, 0.2);
+            padding: 6px;
+            color: #ec483c;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .name {
+            flex:1;
+            margin: 0 64px 0 64px ;
+            /* padding-bottom: 16px; */
+        }
+        .value {
+            flex: 1;
+        }
+        .title {
+            display: flex;
+            color: #ec483c;
+            font-size: 16px;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+        .title-icon  {
+            font-size: 20px;
+            color: #ec483c;
+            align-items: center;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <i class="title-icon fa-solid fa-circle-info"></i>
+        <div class="title-content">Information Of CPU</div>
+    </div>
+    <div class="header">
+        <div class="name">Name</div>
+        <div class="value">Value</div>
+    </div>
+    <div id="cpu" class="cpu">
+    <div id="cpu_name" class="cpuname"></div>
+    <div id="cpu_value" class="cpuvalue"></div>
+    </div>
+    <script type = "module" src="../Scripts/excuteScript.js"></script>
+    <!-- <script type="module" src="../Scripts/loadScripts.js"></script> -->
+</body>
+</html>
