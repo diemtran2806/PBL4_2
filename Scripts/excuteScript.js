@@ -12,8 +12,8 @@ const {getCPUInfo} = require('../Scripts/loadScripts.js')
 //     document.getElementById("cpu").innerText += item[0];
 // })
 
-const name = getCPUInfo().name;
-const value = getCPUInfo().value;
+const name = getCPUInfo.name;
+const value = getCPUInfo.value;
 // const value = getCPUInfo().value.toString().replace(/,/g, "\n");
 //document.getElementById("cpu").innerText = getCPUInfo().name[10];
 

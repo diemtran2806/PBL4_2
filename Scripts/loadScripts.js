@@ -1,38 +1,63 @@
-// const nodeChildProcess = require('child_process');
-
-// const script = nodeChildProcess.exec("lscpu", { encoding: "utf-8" });
-// const getCPUInfo = JSON.stringify(script.toString('utf8')).split(":");
-
-//dufng ni cx dc
-// const { execSync } = require("child_process");
-// export const getCPUInfo = () => {
-//   const output = execSync("lscpu",{encoding: 'utf-8' });
-//   return output.split(":");
-// }
-
-// const { execSync } = require("child_process");
-// export const getCPUInfo = ()=>{
-//   execSync("lscpu", { encoding: "utf-8" });
-// }
-
-
-// module.exports = {
-//   getCPUInfo
-// };
 const { execSync } = require("child_process");
-const getCPUInfo = () => {
-  const output = execSync("lscpu",{encoding: 'utf-8' });
-  const cpuInfoArray = {
+
+function getInfoWithNameAndValue(command) {
+  const infoArray = {
     name: [],
     value: []
   };
-  output.split("\n").map((item) => {
-    cpuInfoArray.name.push(item.split(":")[0]);
-    cpuInfoArray.value.push(item.split(":")[1]);
-  });
-  return cpuInfoArray;
+  try {
+    const stdout = execSync(command, { encoding: 'utf8' });
+    stdout.split("\n").map((item) => {
+      infoArray.name.push(item.split(":")[0]);
+      infoArray.value.push(item.split(":")[1]);
+    });
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+  return infoArray;
 }
 
+const getCPUInfo = getInfoWithNameAndValue('lscpu');
+const getMemoryInfo = getInfoWithNameAndValue('cat /proc/meminfo');
+const getDiskInfo = (() => {
+  const diskInfoArray = {
+    Filesystem: [],
+    Type: [],
+    Blocks: [],
+    Used: [],
+    Available: [],
+    UsePercent: [],
+    MountedOn: []
+  };
+  try {
+    const stdout = execSync('df -T | tail -n +2', { encoding: 'utf8' });
+    stdout.replace(/\s{2,}/g, ' ').split("\n").map((item) => {
+      diskInfoArray.Filesystem.push(item.split(" ")[0]);
+      diskInfoArray.Type.push(item.split(" ")[1]);
+      diskInfoArray.Blocks.push(item.split(" ")[2]);
+      diskInfoArray.Used.push(item.split(" ")[3]);
+      diskInfoArray.Available.push(item.split(" ")[4]);
+      diskInfoArray.UsePercent.push(item.split(" ")[5]);
+      diskInfoArray.MountedOn.push(item.split(" ")[6]);
+    });
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+  return diskInfoArray;
+})();
+
 module.exports = {
-  getCPUInfo
+  getCPUInfo,
+  getMemoryInfo,
+  getDiskInfo
 };
