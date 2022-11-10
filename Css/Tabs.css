@@ -30,7 +30,8 @@ body > div {
   padding: 22px 36px 17px 36px;
   font-size: 20px;
   text-align: center;
-  color: #ec483c;
+  /* color: #ec483c; */
+  color: rgb(85, 86, 170);
   background-color: #fff;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
@@ -48,12 +49,14 @@ body > div {
 }
 .tab-item:hover {
   opacity: 1;
-  background-color: rgba(219, 52, 40, 0.1);;
+  /* background-color: rgba(219, 52, 40, 0.1);; */
+  background-color: rgba(127, 3, 199, 0.1);
   border-color: rgba(194, 53, 100, 0.1);
 }
 .tab-item.active {
   opacity: 1;
-  background-color: rgba(219, 52, 40, 0.1);
+  /* background-color: rgba(219, 52, 40, 0.1); */
+  background-color: rgba(127, 3, 199, 0.15);
 }
 /* .tab-item.line {
   position: absolute;
@@ -69,7 +72,8 @@ a {
     text-decoration: none;
     font-size: 16px;
     font-weight: 700;
-    color: #ec483c;
+    /* color: #ec483c; */
+    color: rgb(85, 86, 170);
     display: block;
     padding-left: 16px;
 }

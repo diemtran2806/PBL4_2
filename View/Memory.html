@@ -7,65 +7,65 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Css/styles.css">
     <title>Document</title>
     <style>
-        body {
-            font-family: "Poppins", sans-serif;
-        }
-        .cpuinfor {
+        .memoryinfor {
             background-color: rgba(127, 3, 199, 0.08);
             font-weight: 400;
             font-size: 14px;
             width: 100%;
         }
-        .cpuinfor td {
+        .memoryinfor td {
             /* border: 1px solid #ddd; */
             padding: 8px;
             padding-left: 64px;
         }
-        .cpuinfor tr:nth-child(even){background-color: rgba(127, 3, 199, 0.06);}
-        .cpuinfor tr:hover {
+        .memoryinfor tr:nth-child(even){background-color: rgba(127, 3, 199, 0.06);}
+        .memoryinfor tr:hover {
             background-color: rgba(127, 3, 199, 0.15);
         }
-        /* .cpu {
-            display: flex; */
-            /* background-color: rgba(250, 151, 2, 0.2);
+        /* .memory {
+            display: flex;
+            justify-content: space-between;
+            background-color: rgba(250, 151, 2, 0.2);
             background-color: rgba(127, 3, 199, 0.08);
             color:#333;
         }
-        .cpuname {
+        .memoryname {
             flex: 1;
             flex-wrap: nowrap;
             justify-content: space-between;
             margin: 0 64px 0 64px ;
         }
-        .cpuvalue {
+        .memoryvalue {
             flex: 1;
-            flex-wrap: nowrap; */
-            /* justify-content: flex-end;
+            flex-wrap: nowrap;
+            justify-content: flex-end;
         } */
         .header {
             display: flex;
             font-weight: 600;
-            background-color: rgba(127, 3, 199, 0.15);;
+            background-color: rgba(127, 3, 199, 0.08);
             /* background-color: rgba(248, 73, 3, 0.2); */
             padding: 6px;
             /* color: #fc4710; */
-            color: rgba(102, 103, 171, 0.986);
+            /* color: rgba(102, 103, 171, 0.986); */
+            color:var(--primary);
             align-items: center;
             margin-bottom: 16px;
         }
-        .name {
+        .header-title:nth-child(1) {
             flex:40%;
+            margin-right: 92px;
             padding: 0 34px 0 64px;
-            /* padding-bottom: 16px; */
         }
-        .value {
+        .header-title {
             flex: 60%;
         }
         .title {
             display: flex;
-            color: rgb(85, 86, 170);
+            color: var(--primary);
             font-size: 16px;
             justify-content: center;
             font-weight: 700;
@@ -75,7 +75,7 @@
         .title-icon  {
             font-size: 20px;
             /* color:#fc4710; */
-            color: rgb(85, 86, 170);
+            color: var(--primary);
             align-items: center;
             margin-right: 12px;
         }
@@ -84,16 +84,15 @@
 <body>
     <div class="title">
         <i class="title-icon fa-solid fa-circle-info"></i>
-        <div class="title-content">Information Of CPU</div>
+        <div class="title-content">Information Of Memory</div>
     </div>
     <div class="header">
-        <div class="name">Name</div>
-        <div class="value">Value</div>
+        <div class="header-title">Name</div>
+        <div class="header-title">Value</div>
     </div>
-    <table class="cpuinfor">
-        <tbody id="cpu"></tbody>
-   </table> 
-    <script type = "module" src="../Scripts/excuteScript.js"></script>
-    <!-- <script type="module" src="../Scripts/loadScripts.js"></script> -->
+    <table class="memoryinfor">
+        <tbody id="memory"></tbody>
+   </table>
+    <script type = "module" src="../Scripts/memoryScript.js"></script>
 </body>
 </html>
