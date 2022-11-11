@@ -24,6 +24,109 @@ function getInfoWithNameAndValue(command) {
 
 const getCPUInfo = getInfoWithNameAndValue('lscpu');
 const getMemoryInfo = getInfoWithNameAndValue('cat /proc/meminfo');
+const getTopInfo = (() => {
+  const topInfoArray = {
+    summaryDisplay: {
+      uptimeAndLoadAverages: {
+        command: String,
+        currentSystemTime: String,
+        systemUptime: String,
+        numberOfCurrentUsers: String,
+        loadAverage: {
+          lastOneMinute: String,
+          lastFiveMinutes: String,
+          lastFifteenMinutes: String
+        }
+      },
+      tasks: {},
+      cpuStates: {},
+      memoryUsage: {},
+      swapUsage: {}
+    },
+    fields: {
+      PID: [],
+      User: [],
+      PR: [],
+      NI: [],
+      VIRT: [],
+      RES: [],
+      SHR: [],
+      S: [],
+      CPUpercent: [],
+      MEMpercent: [],
+      Time: [],
+      Command: []
+    }
+  };
+  try {
+    const stdout = execSync('top -b -n 1', { encoding: 'utf8' });
+    stdout.split("\n").map((item, index) => {
+      if (index === 0) {
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.command = item.trimStart().split(/\s+/)[0];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.currentSystemTime = item.trimStart().split(/\s+/)[2];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.systemUptime = item.trimStart().split(/\s+/)[4].slice(0, -1);
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers = item.trimStart().split(/\s+/)[5];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute = item.trimStart().split(/\s+/)[9].slice(0, -1);
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes = item.trimStart().split(/\s+/)[10].slice(0, -1);
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes = item.trimStart().split(/\s+/)[11];
+      }
+      else if (index === 1) {
+        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[2].slice(0, -1)] = item.split(/\s+/)[1];
+        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[4].slice(0, -1)] = item.split(/\s+/)[3];
+        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
+        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
+        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[10]] = item.split(/\s+/)[9];
+      }
+      else if (index === 2) {
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[2].slice(0, -1)] = item.split(/\s+/)[1];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[4].slice(0, -1)] = item.split(/\s+/)[3];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[10].slice(0, -1)] = item.split(/\s+/)[9];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[12].slice(0, -1)] = item.split(/\s+/)[11];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[14].slice(0, -1)] = item.split(/\s+/)[13];
+        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[16]] = item.split(/\s+/)[15];
+      }
+      else if (index === 3) {
+        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[4].slice(0, -1)] = item.split(/\s+/)[3];
+        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
+        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
+        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[10]] = item.split(/\s+/)[9];
+      }
+      else if (index === 4) {
+        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[3].slice(0, -1)] = item.split(/\s+/)[2];
+        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[5].slice(0, -1)] = item.split(/\s+/)[4];
+        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[7].slice(0, -1)] = item.split(/\s+/)[6];
+        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[9].concat(item.split(/\s+/)[10])] = item.split(/\s+/)[8];
+      }
+      else if (index > 6) {
+        topInfoArray.fields.PID.push(item.trimStart().split(/\s+/)[0]);
+        topInfoArray.fields.User.push(item.trimStart().split(/\s+/)[1]);
+        topInfoArray.fields.PR.push(item.trimStart().split(/\s+/)[2]);
+        topInfoArray.fields.NI.push(item.trimStart().split(/\s+/)[3]);
+        topInfoArray.fields.VIRT.push(item.trimStart().split(/\s+/)[4]);
+        topInfoArray.fields.RES.push(item.trimStart().split(/\s+/)[5]);
+        topInfoArray.fields.SHR.push(item.trimStart().split(/\s+/)[6]);
+        topInfoArray.fields.S.push(item.trimStart().split(/\s+/)[7]);
+        topInfoArray.fields.CPUpercent.push(item.trimStart().split(/\s+/)[8]);
+        topInfoArray.fields.MEMpercent.push(item.trimStart().split(/\s+/)[9]);
+        topInfoArray.fields.Time.push(item.trimStart().split(/\s+/)[10]);
+        topInfoArray.fields.Command.push(item.trimStart().split(/\s+/)[11]);
+      }
+    });
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+  console.log(topInfoArray);
+  return topInfoArray;
+})();
+
+
 const getDiskInfo = (() => {
   const diskInfoArray = {
     Filesystem: [],
@@ -59,5 +162,6 @@ const getDiskInfo = (() => {
 module.exports = {
   getCPUInfo,
   getMemoryInfo,
-  getDiskInfo
+  getDiskInfo,
+  getTopInfo
 };
