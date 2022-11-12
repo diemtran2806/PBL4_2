@@ -124,7 +124,7 @@ const getTopInfo = (() => {
   }
   console.log(topInfoArray);
   return topInfoArray;
-})();
+});
 
 
 const getDiskInfo = (() => {

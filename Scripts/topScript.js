@@ -1,19 +1,19 @@
+const {getTopInfo} = require('../Scripts/loadScripts.js')
 let tableTag = document.getElementById("datatable");
 
 function loadTable(tableTag) {
-    const {getTopInfo} = require('../Scripts/loadScripts.js')
-const PID = getTopInfo.fields.PID;
-const User = getTopInfo.fields.User;
-const PR = getTopInfo.fields.PR;
-const NI = getTopInfo.fields.NI;
-const VIRT = getTopInfo.fields.VIRT;
-const RES = getTopInfo.fields.RES;
-const SHR = getTopInfo.fields.SHR;
-const S = getTopInfo.fields.S;
-const CPU = getTopInfo.fields.CPUpercent;
-const MEM = getTopInfo.fields.MEMpercent;
-const TIME = getTopInfo.fields.Time;
-const COMMAND = getTopInfo.fields.Command;
+const PID = getTopInfo().fields.PID;
+const User = getTopInfo().fields.User;
+const PR = getTopInfo().fields.PR;
+const NI = getTopInfo().fields.NI;
+const VIRT = getTopInfo().fields.VIRT;
+const RES = getTopInfo().fields.RES;
+const SHR = getTopInfo().fields.SHR;
+const S = getTopInfo().fields.S;
+const CPU = getTopInfo().fields.CPUpercent;
+const MEM = getTopInfo().fields.MEMpercent;
+const TIME = getTopInfo().fields.Time;
+const COMMAND = getTopInfo().fields.Command;
     var head = document.createElement("thead");
     head.setAttribute("id", "headtable");
     tableTag.appendChild(head);
