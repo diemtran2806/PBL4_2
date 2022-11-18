@@ -122,10 +122,30 @@ const getTopInfo = (() => {
       process.exit(1);
     }
   }
-  console.log(topInfoArray);
+  // console.log(topInfoArray);
   return topInfoArray;
 });
 
+const getMultipleCPUInfo = () => {
+  const CPUInfoArray = [];
+  try {
+    const stdout = execSync('mpstat -P ALL', { encoding: 'utf8' });
+    stdout.split("\n").map((item, index) => {
+      if (index > 3 && index < 12) {
+        CPUInfoArray.push(100.0 - parseFloat((item.split(/\s+/)[11]).replace(",", ".")));
+      }
+    });
+    console.log(CPUInfoArray);
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+  return CPUInfoArray;
+};
 
 const getDiskInfo = (() => {
   const diskInfoArray = {
@@ -163,5 +183,6 @@ module.exports = {
   getCPUInfo,
   getMemoryInfo,
   getDiskInfo,
-  getTopInfo
+  getTopInfo,
+  getMultipleCPUInfo
 };
