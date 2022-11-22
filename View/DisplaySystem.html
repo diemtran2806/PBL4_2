@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <canvas id="myChart"></canvas>
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type ="module" src="../Scripts/topScript.js"></script>
+
+<script>
+  const ctx = document.getElementById('myChart');
+  const {getTopInfo} = require('../Scripts/loadScripts.js');
+  var dps = [];
+  var x = [];
+  var chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      //labels: ['0','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','60'],
+      labels: x,
+      datasets: [{
+        label: 'CPU States',
+        data: [],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      animation: false,
+      scales: {
+        x: {
+            beginAtZero: true,
+        },
+        y: {
+          beginAtZero: true
+        }
+      },
+      elements: {
+        point: {
+          radius:0,
+          borderWidth:0
+        },
+        line: {
+          tension: 0.3
+          //borderJoinStyle: 'round'
+          //stepped: true
+        }
+      }
+    }
+  });
+  function addLabel() {
+    for(var i=0; i<=60;i++) {
+        x.push(i);
+    }  
+  }
+  addLabel();
+  function addData() {
+    var y = Number(getTopInfo().summaryDisplay.cpuStates.id.replace(',','.'));
+    if(chart.data.datasets[0].data.length < 61) {
+        chart.data.datasets[0].data.unshift(y);
+    } else {
+        chart.data.datasets[0].data.pop();
+        chart.data.datasets[0].data.unshift(y);
+    }
+    chart.update();
+  }
+  setInterval(addData,1000);
+
+</script>
+</body>
+</html>

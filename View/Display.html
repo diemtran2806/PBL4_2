@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script>
+        window.onload = function () {
+        
+        var dps = []; // dataPoints
+        var chart = new CanvasJS.Chart("chartContainer", {
+            title :{
+                text: "Memmory"
+            },
+            data: [{
+                type: "line",
+                dataPoints: dps
+            }]
+        });
+        
+        var xVal = 0;
+        var yVal = 0; 
+        var updateInterval = 1000;
+        var dataLength = 20; // number of dataPoints visible at any point
+        
+        var updateChart = function (count) {
+        
+            count = count || 1;
+        
+            for (var j = 0; j < count; j++) {
+                yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+                dps.push({
+                    x: xVal,
+                    y: yVal
+                });
+                xVal++;
+            }
+        
+            if (dps.length > dataLength && xVal == 60) {
+                dps.shift();
+                xVal = 0;
+            }
+        
+            chart.render();
+        };
+        
+        updateChart(dataLength);
+        setInterval(function(){updateChart()}, updateInterval);
+        
+        }
+        </script> -->
+        <!-- <script src="../node_modules/systemjs/dist/system.src.js"></script>
+        <script src="systemjs.config.js"></script> -->
+</head>
+<body>
+    <script type = "module" src="../Scripts/topScript.js"></script>
+    <script type = "module" src="../Scripts/chart.js"></script>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+</body>
+</html>
