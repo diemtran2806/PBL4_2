@@ -9,6 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <title>Document</title>
     <style>
+        body {
+            /* //display: flex; */
+            font-family: "Poppins", sans-serif;
+        }
         .header {
             margin-bottom: 24px;
         }
@@ -50,21 +54,17 @@
         }
         .tasks {
             width: 100%;
+            margin-bottom: 12px;
+            font-weight: 400;
         }
         .title{
             width: 100%;
             text-align: center;
-            font-size: 20px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
             color:rgba(102, 103, 171, 0.986);
             margin-bottom: 12px;
             background-color: rgba(127, 3, 199, 0.06);
-        }
-        .tasks { 
-            margin-bottom: 12px;
-        }
-        .title { 
-            padding: 12px;
         }
         .detailTasks {
             display: flex;
@@ -72,7 +72,7 @@
         }
         .title-tasks span {
             color: rgb(63, 2, 121);
-            font-size: 20px;
+            font-size: 16px;
             margin-bottom: 12px;
             line-height: 24px;
         }
@@ -80,9 +80,11 @@
             border: none;
             background-color: rgb(63, 2, 121);
             color: #fff;
-            padding: 16px 24px 16px 24px;
+            padding: 12px 24px 12px 24px;
             margin-top: 12px;
             text-align: center;
+            border-radius: 2px;
+            margin-bottom: 12px;
         }
         button:hover {
             cursor: pointer;
@@ -110,8 +112,15 @@
    </table>
     <script type = "module" src="../Scripts/topScript.js"></script>
     <script>
+        var check = false;
         function showDetail() { 
-            document.getElementById("datatable").style.display = "block";
+            if(check === false) {
+                document.getElementById("datatable").style.display = "block";
+                check = true;
+            } else {
+                document.getElementById("datatable").style.display = "none";
+                check = false;
+            }
         }
     </script>
 </body>

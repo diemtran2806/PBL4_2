@@ -5,16 +5,17 @@ let tasksTag = document.getElementById("tasks");
 
 
 function loadTasks() {
+    const topInfor = getTopInfo();
     let totalTag = document.getElementById("total");
     let runningTag = document.getElementById("running");
     let sleepingTag = document.getElementById("sleeping");
     let stoppedTag = document.getElementById("stopped");
     let zombieTag = document.getElementById("zombie");
-    const total = getTopInfo().summaryDisplay.tasks.total;
-    const running = getTopInfo().summaryDisplay.tasks.running;
-    const sleeping = getTopInfo().summaryDisplay.tasks.sleeping;
-    const stopped = getTopInfo().summaryDisplay.tasks.stopped;
-    const zombie = getTopInfo().summaryDisplay.tasks.zombie;
+    const total = topInfor.summaryDisplay.tasks.total;
+    const running = topInfor.summaryDisplay.tasks.running;
+    const sleeping = topInfor.summaryDisplay.tasks.sleeping;
+    const stopped = topInfor.summaryDisplay.tasks.stopped;
+    const zombie = topInfor.summaryDisplay.tasks.zombie;
     var ttotal = document.createElement("div");
         ttotal.setAttribute("id", "ttotal");
         totalTag.appendChild(ttotal);
@@ -38,13 +39,14 @@ function loadTasks() {
 }
 
 function loadHeader(headerTag) {
-    const command = getTopInfo().summaryDisplay.uptimeAndLoadAverages.command;
-    const currentTime = getTopInfo().summaryDisplay.uptimeAndLoadAverages.currentSystemTime;
-    const systemUptime = getTopInfo().summaryDisplay.uptimeAndLoadAverages.systemUptime;
-    const numUsers = getTopInfo().summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers;
-    const numLoadOne = getTopInfo().summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute;
-    const numLoadTwo = getTopInfo().summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes;
-    const numLoadThree = getTopInfo().summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes;
+    const topInfor = getTopInfo();
+    const command = topInfor.summaryDisplay.uptimeAndLoadAverages.command;
+    const currentTime = topInfor.summaryDisplay.uptimeAndLoadAverages.currentSystemTime;
+    const systemUptime = topInfor.summaryDisplay.uptimeAndLoadAverages.systemUptime;
+    const numUsers = topInfor.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers;
+    const numLoadOne = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute;
+    const numLoadTwo = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes;
+    const numLoadThree = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes;
 
     var body = document.createElement("tbody");
         body.setAttribute("id", "headerbody");
@@ -59,18 +61,19 @@ function loadHeader(headerTag) {
 }
 
 function loadTable(tableTag) {
-const PID = getTopInfo().fields.PID;
-const User = getTopInfo().fields.User;
-const PR = getTopInfo().fields.PR;
-const NI = getTopInfo().fields.NI;
-const VIRT = getTopInfo().fields.VIRT;
-const RES = getTopInfo().fields.RES;
-const SHR = getTopInfo().fields.SHR;
-const S = getTopInfo().fields.S;
-const CPU = getTopInfo().fields.CPUpercent;
-const MEM = getTopInfo().fields.MEMpercent;
-const TIME = getTopInfo().fields.Time;
-const COMMAND = getTopInfo().fields.Command;
+    const topInfor = getTopInfo();
+const PID = topInfor.fields.PID;
+const User = topInfor.fields.User;
+const PR = topInfor.fields.PR;
+const NI = topInfor.fields.NI;
+const VIRT = topInfor.fields.VIRT;
+const RES = topInfor.fields.RES;
+const SHR = topInfor.fields.SHR;
+const S = topInfor.fields.S;
+const CPU = topInfor.fields.CPUpercent;
+const MEM = topInfor.fields.MEMpercent;
+const TIME = topInfor.fields.Time;
+const COMMAND = topInfor.fields.Command;
     var head = document.createElement("thead");
     head.setAttribute("id", "headtable");
     tableTag.appendChild(head);

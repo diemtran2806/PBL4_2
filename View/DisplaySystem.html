@@ -5,71 +5,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .chart-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #666;
+        margin-bottom: 12px;
+        padding-left: 12px;
+      }
+      .detail {
+        display: flex;
+        justify-content: space-between;
+        padding: 24px;
+        margin-bottom: 32px;
+      }
+      .desc {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 6px;
+      }
+      #tulitization {
+        color: #333;
+      }
+    </style>
 </head>
 <body>
-    <div>
+    <div style="position: relative; height:70vh; width:95vw">
         <canvas id="myChart"></canvas>
+    </div>
+    <div class="detail">
+        <div id="utilization">
+          <div class="desc">Utilization</div>
+        </div>
+        <div id="uptime">
+          <div class="desc">Up Time</div>
+        </div>
+    </div>
+    <div class="chart-title">CPU History</div>
+    <div style="position: relative; height:70vh; width:95vw">
+        <canvas id="myChart2"></canvas>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type ="module" src="../Scripts/topScript.js"></script>
+    <script type ="module" src="../Scripts/chartJs.js"></script>
 
-<script>
-  const ctx = document.getElementById('myChart');
-  const {getTopInfo} = require('../Scripts/loadScripts.js');
-  var dps = [];
-  var x = [];
-  var chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      //labels: ['0','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','60'],
-      labels: x,
-      datasets: [{
-        label: 'CPU States',
-        data: [],
-        borderWidth: 2
-      }]
-    },
-    options: {
-      animation: false,
-      scales: {
-        x: {
-            beginAtZero: true,
-        },
-        y: {
-          beginAtZero: true
-        }
-      },
-      elements: {
-        point: {
-          radius:0,
-          borderWidth:0
-        },
-        line: {
-          tension: 0.3
-          //borderJoinStyle: 'round'
-          //stepped: true
-        }
-      }
-    }
-  });
-  function addLabel() {
-    for(var i=0; i<=60;i++) {
-        x.push(i);
-    }  
-  }
-  addLabel();
-  function addData() {
-    var y = Number(getTopInfo().summaryDisplay.cpuStates.id.replace(',','.'));
-    if(chart.data.datasets[0].data.length < 61) {
-        chart.data.datasets[0].data.unshift(y);
-    } else {
-        chart.data.datasets[0].data.pop();
-        chart.data.datasets[0].data.unshift(y);
-    }
-    chart.update();
-  }
-  setInterval(addData,1000);
-
-</script>
 </body>
 </html>
