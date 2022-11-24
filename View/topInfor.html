@@ -9,13 +9,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <title>Document</title>
     <style>
-        .topinfor {
+        body {
+            /* //display: flex; */
+            font-family: "Poppins", sans-serif;
+        }
+        .header {
+            margin-bottom: 24px;
+        }
+        .header td {
+            color: rgba(102, 103, 171, 0.986);
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .topinfor
+        {
+            display: none;
+        }
+         
+        .topinfor, .header{
             background-color: rgba(127, 3, 199, 0.08);
             font-weight: 400;
             font-size: 14px;
             width: 100%;
         }
-        .topinfor td {
+        .topinfor td, .header td {
             /* border: 1px solid #ddd; */
             padding: 8px;
             /* padding-left: 64px; */
@@ -35,36 +52,76 @@
             align-items: center;
             margin-bottom: 16px;
         }
+        .tasks {
+            width: 100%;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+        .title{
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color:rgba(102, 103, 171, 0.986);
+            margin-bottom: 12px;
+            background-color: rgba(127, 3, 199, 0.06);
+        }
+        .detailTasks {
+            display: flex;
+            justify-content: space-around;
+        }
+        .title-tasks span {
+            color: rgb(63, 2, 121);
+            font-size: 16px;
+            margin-bottom: 12px;
+            line-height: 24px;
+        }
+        button {
+            border: none;
+            background-color: rgb(63, 2, 121);
+            color: #fff;
+            padding: 12px 24px 12px 24px;
+            margin-top: 12px;
+            text-align: center;
+            border-radius: 2px;
+            margin-bottom: 12px;
+        }
+        button:hover {
+            cursor: pointer;
+            background-color: rgb(134, 17, 243);
+        }
     </style>
 </head>
 <body>
-    <!-- <div class="title">
-        <i class="title-icon fa-solid fa-circle-info"></i>
-        <div class="title-content">Information Of Memory</div>
-    </div> -->
-    <!-- <div class="header">
-        <div class="header-title">Name</div>
-        <div class="header-title">Value</div>
-    </div> -->
+    <table id="header" class="header">
+    </table>
+    <div id="tasks" class="tasks">
+        <div class="title">TASKS</div>
+        <div class="detailTasks">
+            <div id="total" class="title-tasks">
+                <span>Total</span>
+            </div>
+            <div id="running" class="title-tasks"><span>Running</span></div>
+            <div id="sleeping" class="title-tasks"><span>Sleeping</span></div>
+            <div id="stopped" class="title-tasks"><span>Stopped</span></div>
+            <div id="zombie" class="title-tasks"><span>Zombie</span></div>
+        </div>
+    </div>
+    <button id="button" onClick="showDetail()">Details</button>
     <table id ="datatable" class="topinfor">
-        <!-- <thead align="left">
-            <tr>
-                <th>PID</th>
-                <th>User</th>
-                <th>PR</th>
-                <th>NI</th>
-                <th>VIRT</th>
-                <th>RES</th>
-                <th>SHR</th>
-                <th>S</th>
-                <th>%CPU</th>
-                <th>%MEM</th>
-                <th>TIME+</th>
-                <th>COMMAND</th>
-            </tr>
-        </thead>
-        <tbody id="toptable" class="data"></tbody> -->
    </table>
     <script type = "module" src="../Scripts/topScript.js"></script>
+    <script>
+        var check = false;
+        function showDetail() { 
+            if(check === false) {
+                document.getElementById("datatable").style.display = "block";
+                check = true;
+            } else {
+                document.getElementById("datatable").style.display = "none";
+                check = false;
+            }
+        }
+    </script>
 </body>
 </html>
