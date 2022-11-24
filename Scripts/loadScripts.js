@@ -24,6 +24,8 @@ function getInfoWithNameAndValue(command) {
 
 const getCPUInfo = getInfoWithNameAndValue('lscpu');
 const getMemoryInfo = getInfoWithNameAndValue('cat /proc/meminfo');
+
+let topCommand = 'top -b -n 1';
 const getTopInfo = (() => {
   const topInfoArray = {
     summaryDisplay: {
@@ -59,7 +61,8 @@ const getTopInfo = (() => {
     }
   };
   try {
-    const stdout = execSync('top -b -n 1', { encoding: 'utf8' });
+    // console.log(topCommand);
+    const stdout = execSync(topCommand, { encoding: 'utf8' });
     stdout.split("\n").map((item, index) => {
       if (index === 0) {
         topInfoArray.summaryDisplay.uptimeAndLoadAverages.command = item.trimStart().split(/\s+/)[0];
@@ -92,6 +95,7 @@ const getTopInfo = (() => {
         topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
         topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
         topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[10]] = item.split(/\s+/)[9];
+        topInfoArray.summaryDisplay.memoryUsage.usedPercent = parseFloat(topInfoArray.summaryDisplay.memoryUsage.used.replace(",", ".")) * 100 / parseFloat(topInfoArray.summaryDisplay.memoryUsage.total.replace(",", "."))
       }
       else if (index === 4) {
         topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[3].slice(0, -1)] = item.split(/\s+/)[2];
@@ -125,6 +129,11 @@ const getTopInfo = (() => {
   // console.log(topInfoArray);
   return topInfoArray;
 });
+
+const sortFields = (sortField, isAscending) => {
+  topCommand = topCommand.split(' -o')[0];
+  topCommand += isAscending ? ` -o ${sortField}` : ` -o -${sortField}`;
+}
 
 const getMultipleCPUInfo = () => {
   const CPUInfoArray = [];
@@ -184,5 +193,6 @@ module.exports = {
   getMemoryInfo,
   getDiskInfo,
   getTopInfo,
-  getMultipleCPUInfo
+  getMultipleCPUInfo,
+  sortFields
 };
