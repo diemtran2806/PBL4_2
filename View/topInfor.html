@@ -1,127 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <title>Document</title>
     <style>
-        body {
-            /* //display: flex; */
-            font-family: "Poppins", sans-serif;
-        }
-        .header {
-            margin-bottom: 24px;
-        }
-        .header td {
-            color: rgba(102, 103, 171, 0.986);
-            font-size: 16px;
-            font-weight: 500;
-        }
-        .topinfor
-        {
-            display: none;
-        }
-         
-        .topinfor, .header{
-            background-color: rgba(127, 3, 199, 0.08);
-            font-weight: 400;
-            font-size: 14px;
-            width: 100%;
-        }
-        .topinfor td, .header td {
-            /* border: 1px solid #ddd; */
-            padding: 8px;
-            /* padding-left: 64px; */
-        }
-        .topinfor tr:nth-child(even){background-color: rgba(127, 3, 199, 0.06);}
-        .topinfor tr:hover {
-            background-color: rgba(127, 3, 199, 0.15);
-        }
-        .data {
-            justify-content: left;
-        }
-        .topinfor th {
-            font-weight: 600;
-            background-color: rgba(127, 3, 199, 0.15);;
-            padding: 10px;
-            color: rgba(102, 103, 171, 0.986);
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .tasks {
-            width: 100%;
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
-        .title{
-            width: 100%;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            color:rgba(102, 103, 171, 0.986);
-            margin-bottom: 12px;
-            background-color: rgba(127, 3, 199, 0.06);
-        }
-        .detailTasks {
-            display: flex;
-            justify-content: space-around;
-        }
-        .title-tasks span {
-            color: rgb(63, 2, 121);
-            font-size: 16px;
-            margin-bottom: 12px;
-            line-height: 24px;
-        }
-        button {
-            border: none;
-            background-color: rgb(63, 2, 121);
-            color: #fff;
-            padding: 12px 24px 12px 24px;
-            margin-top: 12px;
-            text-align: center;
-            border-radius: 2px;
-            margin-bottom: 12px;
-        }
-        button:hover {
-            cursor: pointer;
-            background-color: rgb(134, 17, 243);
-        }
+      body {
+        /* //display: flex; */
+        font-family: "Poppins", sans-serif;
+      }
+      .header {
+        margin-bottom: 24px;
+      }
+      .header td {
+        color: rgba(102, 103, 171, 0.986);
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .topinfor {
+        display: none;
+        width: 100vw;
+      }
+
+      .topinfor,
+      .header {
+        background-color: rgba(127, 3, 199, 0.08);
+        font-weight: 400;
+        font-size: 14px;
+        width: 100%;
+      }
+      .topinfor td,
+      .header td {
+        /* border: 1px solid #ddd; */
+        padding: 8px;
+        /* padding-left: 64px; */
+      }
+      .topinfor tr:nth-child(even) {
+        background-color: rgba(127, 3, 199, 0.06);
+      }
+      .topinfor tr:hover {
+        background-color: rgba(127, 3, 199, 0.15);
+      }
+      .data {
+        justify-content: left;
+      }
+      .topinfor th {
+        font-weight: 600;
+        background-color: rgba(127, 3, 199, 0.15);
+        padding: 10px;
+        color: rgba(102, 103, 171, 0.986);
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .tasks {
+        width: 100%;
+        margin-bottom: 12px;
+        font-weight: 400;
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: rgba(102, 103, 171, 0.986);
+        margin-bottom: 12px;
+        background-color: rgba(127, 3, 199, 0.06);
+      }
+      .detailTasks {
+        display: flex;
+        justify-content: space-around;
+      }
+      .title-tasks span {
+        color: rgb(63, 2, 121);
+        font-size: 16px;
+        margin-bottom: 12px;
+        line-height: 24px;
+      }
+      button {
+        border: none;
+        background-color: rgb(63, 2, 121);
+        color: #fff;
+        padding: 12px 24px 12px 24px;
+        margin-top: 12px;
+        text-align: center;
+        border-radius: 2px;
+        margin-bottom: 12px;
+      }
+      button:hover {
+        cursor: pointer;
+        background-color: rgb(134, 17, 243);
+      }
+      .sort-icon {
+        display: none;
+      }
     </style>
-</head>
-<body>
-    <table id="header" class="header">
-    </table>
+  </head>
+  <body>
+    <table id="header" class="header"></table>
     <div id="tasks" class="tasks">
-        <div class="title">TASKS</div>
-        <div class="detailTasks">
-            <div id="total" class="title-tasks">
-                <span>Total</span>
-            </div>
-            <div id="running" class="title-tasks"><span>Running</span></div>
-            <div id="sleeping" class="title-tasks"><span>Sleeping</span></div>
-            <div id="stopped" class="title-tasks"><span>Stopped</span></div>
-            <div id="zombie" class="title-tasks"><span>Zombie</span></div>
+      <div class="title">TASKS</div>
+      <div class="detailTasks">
+        <div id="total" class="title-tasks">
+          <span>Total</span>
         </div>
+        <div id="running" class="title-tasks"><span>Running</span></div>
+        <div id="sleeping" class="title-tasks"><span>Sleeping</span></div>
+        <div id="stopped" class="title-tasks"><span>Stopped</span></div>
+        <div id="zombie" class="title-tasks"><span>Zombie</span></div>
+      </div>
     </div>
     <button id="button" onClick="showDetail()">Details</button>
-    <table id ="datatable" class="topinfor">
-   </table>
-    <script type = "module" src="../Scripts/topScript.js"></script>
+    <table id="datatable" class="topinfor"></table>
+    <script type="module" src="../Scripts/topScript.js"></script>
     <script>
-        var check = false;
-        function showDetail() { 
-            if(check === false) {
-                document.getElementById("datatable").style.display = "block";
-                check = true;
-            } else {
-                document.getElementById("datatable").style.display = "none";
-                check = false;
-            }
+      var check = false;
+      function showDetail() {
+        if (check === false) {
+          document.getElementById("datatable").style.display = "block";
+          check = true;
+        } else {
+          document.getElementById("datatable").style.display = "none";
+          check = false;
         }
+      }
     </script>
-</body>
+  </body>
 </html>
