@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>Document</title>
+    <style>
+        * {
+            /* padding: 4px; */
+            margin: 4px;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Poppins", sans-serif;
+        }
+        .disksdata{
+            background-color: rgba(127, 3, 199, 0.08);
+            font-weight: 400;
+            font-size: 14px;
+            width: 100%;
+        }
+        .disksdata td{
+            padding: 8px;
+            width: 8.3%;
+        }
+        .disksdata tr:nth-child(even){background-color: rgba(127, 3, 199, 0.06);}
+        .disksdata tr:hover {
+            background-color: rgba(127, 3, 199, 0.15);
+        }
+        .disksdata th {
+            font-weight: 600;
+            background-color: rgba(127, 3, 199, 0.15);;
+            padding: 10px;
+            color: rgba(102, 103, 171, 0.986);
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .title {
+            display: flex;
+            color: rgba(102, 103, 171, 0.986);
+            font-size: 16px;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+        .title-icon  {
+            font-size: 20px;
+            color: rgba(102, 103, 171, 0.986);
+            align-items: center;
+            margin-right: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">
+        <i class="title-icon fa-solid fa-circle-info"></i>
+        <div class="title-content">Information Of Disks</div>
+    </div>
+    <table id="disksdata" class="disksdata">
+        <thead id="headDisks"></thead>
+    </table>
+    <script type="module" src="../Scripts/disksScript.js"></script>
+  </body>
+</html>
