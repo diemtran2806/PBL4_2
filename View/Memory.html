@@ -1,119 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../Css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      rel="stylesheet"
+      href="../Fonts/fontawesome-free-6.2.0-web/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../Css/styles.css" />
     <title>Document</title>
     <style>
-        .memoryinfor {
-            visibility: hidden;
-            background-color: rgba(127, 3, 199, 0.08);
-            font-weight: 400;
-            font-size: 14px;
-            width: 100%;
-        }
-        /* .memoryinfor .memory {
+      .memoryinfor {
+        visibility: hidden;
+        background-color: rgba(127, 3, 199, 0.08);
+        font-weight: 400;
+        font-size: 14px;
+        width: 100%;
+      }
+      /* .memoryinfor .memory {
             width: 100%;
         } */
-        .memoryinfor td {
-            padding: 8px;
-            padding-left: 64px;
-        }
-        .memoryinfor tr:nth-child(even){background-color: rgba(127, 3, 199, 0.06);}
-        .memoryinfor tr:hover {
-            background-color: rgba(127, 3, 199, 0.15);
-        }
-        .header {
-            visibility: hidden;
-            display: flex;
-            font-weight: 600;
-            background-color: rgba(127, 3, 199, 0.08);
-            /* background-color: rgba(248, 73, 3, 0.2); */
-            padding: 6px;
-            /* color: #fc4710; */
-            /* color: rgba(102, 103, 171, 0.986); */
-            color:var(--primary);
-            align-items: center;
-            margin-bottom: 16px;
-            /* display: none; */
-        }
-        .header-title:nth-child(1) {
-            flex:40%;
-            margin-right: 92px;
-            padding: 0 34px 0 64px;
-        }
-        .header-title {
-            flex: 60%;
-        }
-        .title {
-            display: flex;
-            color: var(--primary);
-            font-size: 16px;
-            justify-content: center;
-            font-weight: 700;
-            margin-bottom: 16px;
-            align-items: center;
-        }
-        .title-icon  {
-            font-size: 20px;
-            /* color:#fc4710; */
-            color: var(--primary);
-            align-items: center;
-            margin-right: 12px;
-        }
-        button {
-            border: none;
-            background-color: rgb(63, 2, 121);
-            color: #fff;
-            padding: 12px 24px 12px 24px;
-            margin-top: 12px;
-            text-align: center;
-            border-radius: 2px;
-            margin-bottom: 12px;
-        }
-        button:hover {
-            cursor: pointer;
-            background-color: rgb(134, 17, 243);
-        }
+      .memoryinfor td {
+        padding: 8px;
+        padding-left: 64px;
+      }
+      .memoryinfor tr:nth-child(even) {
+        background-color: rgba(127, 3, 199, 0.06);
+      }
+      .memoryinfor tr:hover {
+        background-color: rgba(127, 3, 199, 0.15);
+      }
+      .header {
+        visibility: hidden;
+        display: flex;
+        font-weight: 600;
+        background-color: rgba(127, 3, 199, 0.08);
+        /* background-color: rgba(248, 73, 3, 0.2); */
+        padding: 6px;
+        /* color: #fc4710; */
+        /* color: rgba(102, 103, 171, 0.986); */
+        color: var(--primary);
+        align-items: center;
+        margin-bottom: 16px;
+        /* display: none; */
+      }
+      .header-title:nth-child(1) {
+        flex: 40%;
+        margin-right: 92px;
+        padding: 0 34px 0 64px;
+      }
+      .header-title {
+        flex: 60%;
+      }
+      .title {
+        display: flex;
+        color: var(--primary);
+        font-size: 16px;
+        justify-content: center;
+        font-weight: 700;
+        margin-bottom: 16px;
+        align-items: center;
+      }
+      .title-icon {
+        font-size: 20px;
+        /* color:#fc4710; */
+        color: var(--primary);
+        align-items: center;
+        margin-right: 12px;
+      }
+      button {
+        border: none;
+        background-color: rgb(63, 2, 121);
+        color: #fff;
+        padding: 12px 24px 12px 24px;
+        margin-top: 12px;
+        text-align: center;
+        border-radius: 2px;
+        margin-bottom: 12px;
+      }
+      button:hover {
+        cursor: pointer;
+        background-color: rgb(134, 17, 243);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="title">
-        <i class="title-icon fa-solid fa-circle-info"></i>
-        <div class="title-content">Information Of Memory</div>
+      <i class="title-icon fa-solid fa-circle-info"></i>
+      <div class="title-content">Information Of Memory</div>
     </div>
-    <div style="position: relative; height:70vh; width:95vw">
-        <canvas id="myChart"></canvas>
+    <div style="position: relative; height: 50vh; width: 95vw">
+      <canvas id="myChart"></canvas>
     </div>
     <button id="button" onClick="showDetail()">Details</button>
-    <div id = "header" class="header">
-        <div class="header-title">Name</div>
-        <div class="header-title">Value</div>
+    <div id="header" class="header">
+      <div class="header-title">Name</div>
+      <div class="header-title">Value</div>
     </div>
-    <table id = "memoryinfor" class="memoryinfor">
-        <tbody id="memory" class="memory"></tbody>
-   </table>
-    <script type = "module" src="../Scripts/memoryScript.js"></script>
+    <table id="memoryinfor" class="memoryinfor">
+      <tbody id="memory" class="memory"></tbody>
+    </table>
+    <script type="module" src="../Scripts/memoryScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        var check = false;
-        function showDetail() {
-          if (check === false) {
-            document.getElementById("memoryinfor").style.visibility = 'visible';
-            document.getElementById("header").style.visibility = 'visible';
+      var check = false;
+      function showDetail() {
+        if (check === false) {
+          document.getElementById("memoryinfor").style.visibility = "visible";
+          document.getElementById("header").style.visibility = "visible";
 
-            check = true;
-          } else {
-            document.getElementById("memoryinfor").style.visibility = 'hidden';
-            document.getElementById("header").style.display = "hidden";
-            check = false;
-          }
+          check = true;
+        } else {
+          document.getElementById("memoryinfor").style.visibility = "hidden";
+          document.getElementById("header").style.visibility = "hidden";
+          check = false;
         }
-      </script>
-</body>
+      }
+    </script>
+  </body>
 </html>
