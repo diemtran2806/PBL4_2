@@ -49,7 +49,9 @@ const ctx = document.getElementById('myChart');
             beginAtZero: true,
         },
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          min: 0,
+          max:100
         }
       },
       elements: {
@@ -124,7 +126,9 @@ const ctx = document.getElementById('myChart');
             beginAtZero: true,
         },
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          min: 0,
+          max:100
         }
       },
       elements: {
@@ -155,7 +159,7 @@ const ctx = document.getElementById('myChart');
   }
   addLabel();
   function addData() {
-    var y = Number(getTopInfo().summaryDisplay.cpuStates.id.replace(',','.'));
+    var y = 100 - Number(getTopInfo().summaryDisplay.cpuStates.id.replace(',','.'));
     if(chart.data.datasets[0].data.length < 61) {
         chart.data.datasets[0].data.unshift(y);
     } else {

@@ -1,6 +1,5 @@
 const { getTopInfo, sortFields } = require("../Scripts/loadScripts.js");
 let tableTag = document.getElementById("datatable");
-let headerTag = document.getElementById("header");
 let tasksTag = document.getElementById("tasks");
 
 let isAscending = [
@@ -81,37 +80,42 @@ function loadTasks(topInfor) {
   document.getElementById("tzombie").innerText = zombie;
 }
 
-function loadHeader(headerTag, topInfor) {
-  // const topInfor = getTopInfo();
-  const command = topInfor.summaryDisplay.uptimeAndLoadAverages.command;
-  const currentTime =
-    topInfor.summaryDisplay.uptimeAndLoadAverages.currentSystemTime;
-  const systemUptime =
-    topInfor.summaryDisplay.uptimeAndLoadAverages.systemUptime;
-  const numUsers =
-    topInfor.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers;
-  const numLoadOne =
-    topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute;
-  const numLoadTwo =
-    topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes;
-  const numLoadThree =
-    topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage
-      .lastFifteenMinutes;
+function loadHeader(topInfor) {
+    let currentSysTimeTag = document.getElementById("currentSystemTime");
+    let upTimeTag = document.getElementById("upTime");
+    let numOfUserTag = document.getElementById("numOfUser");
+    let loadAveTag = document.getElementById("loadAve");
+    const currentTime = topInfor.summaryDisplay.uptimeAndLoadAverages.currentSystemTime;
+    const systemUptime = topInfor.summaryDisplay.uptimeAndLoadAverages.systemUptime;
+    const numUsers = topInfor.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers;
+    const numLoadOne = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute;
+    const numLoadTwo = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes;
+    const numLoadThree = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes;
+    var tcurrentSysTime = document.createElement("div");
+        tcurrentSysTime.setAttribute("id", "tcurrentSysTime");
+        currentSysTimeTag.appendChild(tcurrentSysTime);
+        document.getElementById("tcurrentSysTime").innerText = currentTime;
 
-  var body = document.createElement("tbody");
-  body.setAttribute("id", "headerbody");
-  headerTag.appendChild(body);
-  document.getElementById("headerbody").innerHTML += `<tr>
-           <td width="30%">Current System Time: ${currentTime}</td>
-           <td width="10%">Up ${systemUptime}</td>
-           <td width="20%%">Number of Users: ${numUsers}</td>
-           <td width="40%%">Load Averages ${numLoadOne} ${numLoadTwo} ${numLoadThree}</td>
-      </tr>`;
+    var tupTime = document.createElement("div");
+        tupTime.setAttribute("id", "tupTime");
+        upTimeTag.appendChild(tupTime);
+        document.getElementById("tupTime").innerText = systemUptime;
+
+    var tnumOfUsers = document.createElement("div");
+        tnumOfUsers.setAttribute("id", "tnumOfUsers");
+        numOfUserTag.appendChild(tnumOfUsers);
+        document.getElementById("tnumOfUsers").innerText = numUsers;
+
+    var tloadAve = document.createElement("div");
+        tloadAve.setAttribute("id", "tloadAve");
+        loadAveTag.appendChild(tloadAve);
+        document.getElementById("tloadAve").innerText = numLoadOne + " " + numLoadTwo + " " + numLoadThree;
+    
 }
 function loadTable(tableTag) {
   const topInfo = getTopInfo();
   loadTasks(topInfo);
-  loadHeader(headerTag, topInfo);
+  loadHeader(topInfo);
   const PID = topInfo.fields.PID;
   const User = topInfo.fields.User;
   const PR = topInfo.fields.PR;
@@ -217,18 +221,18 @@ function loadTable(tableTag) {
   }
   for (var i = 0; i < PID.length; i++) {
     document.getElementById("bodytable").innerHTML += `<tr>
-                 <td width="8.3%">${PID[i]}</td>
-                 <td width="8.3%">${User[i]}</td>
-                 <td width="8.3%">${PR[i]}</td>
-                 <td width="8.3%">${NI[i]}</td>
-                 <td width="8.3%">${VIRT[i]}</td>
-                 <td width="8.3%">${RES[i]}</td>
-                 <td width="8.3%">${SHR[i]}</td>
-                 <td width="8.3%">${S[i]}</td>
-                 <td width="8.3%">${CPU[i]}</td>
-                 <td width="8.3%">${MEM[i]}</td>
-                 <td width="8.3%">${TIME[i]}</td>
-                 <td width="8.3%">${COMMAND[i]}</td>
+                 <td>${PID[i]}</td>
+                 <td>${User[i]}</td>
+                 <td>${PR[i]}</td>
+                 <td>${NI[i]}</td>
+                 <td>${VIRT[i]}</td>
+                 <td>${RES[i]}</td>
+                 <td>${SHR[i]}</td>
+                 <td>${S[i]}</td>
+                 <td>${CPU[i]}</td>
+                 <td>${MEM[i]}</td>
+                 <td>${TIME[i]}</td>
+                 <td>${COMMAND[i]}</td>
             </tr>`;
   }
   document.getElementById("PID").onclick = function () {
@@ -270,20 +274,23 @@ function loadTable(tableTag) {
 }
 
 //load lan dau
-// loadHeader(headerTag);
+// loadHeader();
 // loadTasks();
 loadTable(tableTag);
 function loadProcessInfor() {
-  document.getElementById("headerbody").remove();
   document.getElementById("ttotal").remove();
   document.getElementById("trunning").remove();
   document.getElementById("tsleeping").remove();
   document.getElementById("tstopped").remove();
   document.getElementById("tzombie").remove();
+    document.getElementById("tcurrentSysTime").remove();
+    document.getElementById("tupTime").remove();
+    document.getElementById("tnumOfUsers").remove();
+    document.getElementById("tloadAve").remove();
   while (tableTag.firstChild) {
     tableTag.removeChild(tableTag.firstChild);
   }
-  // loadHeader(headerTag);
+  // loadHeader();
   // loadTasks();
   loadTable(tableTag);
 }
