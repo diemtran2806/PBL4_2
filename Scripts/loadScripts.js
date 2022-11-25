@@ -138,6 +138,28 @@ const sortFields = (sortField, isAscending) => {
 const getMultipleCPUInfo = () => {
   const CPUInfoArray = [];
   try {
+    execSync('top -1 -b -w 512 -n 1 > top.txt', { encoding: 'utf8' });
+    const stdout = execSync('head -n +6 top.txt | tail -n +3', { encoding: 'utf8' });
+    stdout.split("\n").map((item) => {
+      CPUInfoArray.push(100.0 - parseFloat((item.split(/(?:%Cpu| |:|ni,)+/)[7]).replace(",", ".")));
+      CPUInfoArray.push(100.0 - parseFloat((item.split(/(?:%Cpu| |:|ni,)+/)[23]).replace(",", ".")));
+    });
+    
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+  // console.log(CPUInfoArray);
+  return CPUInfoArray;
+};
+
+const getMultipleCPUInfo1 = () => {
+  const CPUInfoArray = [];
+  try {
     const stdout = execSync('mpstat -P ALL', { encoding: 'utf8' });
     stdout.split("\n").map((item, index) => {
       if (index > 3 && index < 12) {
@@ -194,5 +216,6 @@ module.exports = {
   getDiskInfo,
   getTopInfo,
   getMultipleCPUInfo,
-  sortFields
+  sortFields,
+  // getMultipleCPUInfo1
 };
