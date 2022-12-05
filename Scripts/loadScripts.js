@@ -62,60 +62,67 @@ const getTopInfo = (() => {
   };
   try {
     // console.log(topCommand);
+    let result;
     const stdout = execSync(topCommand, { encoding: 'utf8' });
     stdout.split("\n").map((item, index) => {
       if (index === 0) {
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.command = item.trimStart().split(/\s+/)[0];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.currentSystemTime = item.trimStart().split(/\s+/)[2];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.systemUptime = item.trimStart().split(/\s+/)[4].slice(0, -1);
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers = item.trimStart().split(/\s+/)[5];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute = item.trimStart().split(/\s+/)[9].slice(0, -1);
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes = item.trimStart().split(/\s+/)[10].slice(0, -1);
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes = item.trimStart().split(/\s+/)[11];
+        result = item.trimStart().split(/\s+/);
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.command = result[0];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.currentSystemTime = result[2];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.systemUptime = result[4];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers = result[6];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute = result[10].slice(0, -1);
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes = result[11].slice(0, -1);
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes = result[12];
       }
       else if (index === 1) {
-        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[2].slice(0, -1)] = item.split(/\s+/)[1];
-        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[4].slice(0, -1)] = item.split(/\s+/)[3];
-        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
-        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
-        topInfoArray.summaryDisplay.tasks[item.split(/\s+/)[10]] = item.split(/\s+/)[9];
+        result =  item.split(/\s+/);
+        topInfoArray.summaryDisplay.tasks[result[2].slice(0, -1)] = result[1];
+        topInfoArray.summaryDisplay.tasks[result[4].slice(0, -1)] = result[3];
+        topInfoArray.summaryDisplay.tasks[result[6].slice(0, -1)] = result[5];
+        topInfoArray.summaryDisplay.tasks[result[8].slice(0, -1)] = result[7];
+        topInfoArray.summaryDisplay.tasks[result[10]] = result[9];
       }
       else if (index === 2) {
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[2].slice(0, -1)] = item.split(/\s+/)[1];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[4].slice(0, -1)] = item.split(/\s+/)[3];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[10].slice(0, -1)] = item.split(/\s+/)[9];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[12].slice(0, -1)] = item.split(/\s+/)[11];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[14].slice(0, -1)] = item.split(/\s+/)[13];
-        topInfoArray.summaryDisplay.cpuStates[item.split(/\s+/)[16]] = item.split(/\s+/)[15];
+        result = item.split(/\s+/);
+        topInfoArray.summaryDisplay.cpuStates[result[2].slice(0, -1)] = result[1];
+        topInfoArray.summaryDisplay.cpuStates[result[4].slice(0, -1)] = result[3];
+        topInfoArray.summaryDisplay.cpuStates[result[6].slice(0, -1)] = result[5];
+        topInfoArray.summaryDisplay.cpuStates[result[8].slice(0, -1)] = result[7];
+        topInfoArray.summaryDisplay.cpuStates[result[10].slice(0, -1)] = result[9];
+        topInfoArray.summaryDisplay.cpuStates[result[12].slice(0, -1)] = result[11];
+        topInfoArray.summaryDisplay.cpuStates[result[14].slice(0, -1)] = result[13];
+        topInfoArray.summaryDisplay.cpuStates[result[16]] = result[15];
       }
       else if (index === 3) {
-        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[4].slice(0, -1)] = item.split(/\s+/)[3];
-        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[6].slice(0, -1)] = item.split(/\s+/)[5];
-        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[8].slice(0, -1)] = item.split(/\s+/)[7];
-        topInfoArray.summaryDisplay.memoryUsage[item.split(/\s+/)[10]] = item.split(/\s+/)[9];
+        result = item.split(/\s+/);
+        topInfoArray.summaryDisplay.memoryUsage[result[4].slice(0, -1)] = result[3];
+        topInfoArray.summaryDisplay.memoryUsage[result[6].slice(0, -1)] = result[5];
+        topInfoArray.summaryDisplay.memoryUsage[result[8].slice(0, -1)] = result[7];
+        topInfoArray.summaryDisplay.memoryUsage[result[10]] = result[9];
         topInfoArray.summaryDisplay.memoryUsage.usedPercent = parseFloat(topInfoArray.summaryDisplay.memoryUsage.used.replace(",", ".")) * 100 / parseFloat(topInfoArray.summaryDisplay.memoryUsage.total.replace(",", "."))
       }
       else if (index === 4) {
-        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[3].slice(0, -1)] = item.split(/\s+/)[2];
-        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[5].slice(0, -1)] = item.split(/\s+/)[4];
-        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[7].slice(0, -1)] = item.split(/\s+/)[6];
-        topInfoArray.summaryDisplay.swapUsage[item.split(/\s+/)[9].concat(item.split(/\s+/)[10])] = item.split(/\s+/)[8];
+        result = item.split(/\s+/);
+        topInfoArray.summaryDisplay.swapUsage[result[3].slice(0, -1)] = result[2];
+        topInfoArray.summaryDisplay.swapUsage[result[5].slice(0, -1)] = result[4];
+        topInfoArray.summaryDisplay.swapUsage[result[7].slice(0, -1)] = result[6];
+        topInfoArray.summaryDisplay.swapUsage[result[9].concat(result[10])] = result[8];
       }
       else if (index > 6) {
-        topInfoArray.fields.PID.push(item.trimStart().split(/\s+/)[0]);
-        topInfoArray.fields.User.push(item.trimStart().split(/\s+/)[1]);
-        topInfoArray.fields.PR.push(item.trimStart().split(/\s+/)[2]);
-        topInfoArray.fields.NI.push(item.trimStart().split(/\s+/)[3]);
-        topInfoArray.fields.VIRT.push(item.trimStart().split(/\s+/)[4]);
-        topInfoArray.fields.RES.push(item.trimStart().split(/\s+/)[5]);
-        topInfoArray.fields.SHR.push(item.trimStart().split(/\s+/)[6]);
-        topInfoArray.fields.S.push(item.trimStart().split(/\s+/)[7]);
-        topInfoArray.fields.CPUpercent.push(item.trimStart().split(/\s+/)[8]);
-        topInfoArray.fields.MEMpercent.push(item.trimStart().split(/\s+/)[9]);
-        topInfoArray.fields.Time.push(item.trimStart().split(/\s+/)[10]);
-        topInfoArray.fields.Command.push(item.trimStart().split(/\s+/)[11]);
+        result = item.trimStart().split(/\s+/);
+        topInfoArray.fields.PID.push(result[0]);
+        topInfoArray.fields.User.push(result[1]);
+        topInfoArray.fields.PR.push(result[2]);
+        topInfoArray.fields.NI.push(result[3]);
+        topInfoArray.fields.VIRT.push(result[4]);
+        topInfoArray.fields.RES.push(result[5]);
+        topInfoArray.fields.SHR.push(result[6]);
+        topInfoArray.fields.S.push(result[7]);
+        topInfoArray.fields.CPUpercent.push(result[8]);
+        topInfoArray.fields.MEMpercent.push(result[9]);
+        topInfoArray.fields.Time.push(result[10]);
+        topInfoArray.fields.Command.push(result[11]);
       }
     });
   } catch (err) {

@@ -40,7 +40,7 @@ function sort(index, field) {
           "#" + sortFieldId + " > .fa-chevron-up"
         ).style.display = "none");
   }
-  
+
   sortOrder = isAscending[index];
   sortFieldId = field;
   isAscending[index] = !isAscending[index];
@@ -81,37 +81,45 @@ function loadTasks(topInfor) {
 }
 
 function loadHeader(topInfor) {
-    let currentSysTimeTag = document.getElementById("currentSystemTime");
-    let upTimeTag = document.getElementById("upTime");
-    let numOfUserTag = document.getElementById("numOfUser");
-    let loadAveTag = document.getElementById("loadAve");
-    const currentTime = topInfor.summaryDisplay.uptimeAndLoadAverages.currentSystemTime;
-    const systemUptime = topInfor.summaryDisplay.uptimeAndLoadAverages.systemUptime;
-    const numUsers = topInfor.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers;
-    const numLoadOne = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute;
-    const numLoadTwo = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes;
-    const numLoadThree = topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes;
-    var tcurrentSysTime = document.createElement("div");
-        tcurrentSysTime.setAttribute("id", "tcurrentSysTime");
-        currentSysTimeTag.appendChild(tcurrentSysTime);
-        document.getElementById("tcurrentSysTime").innerText = currentTime;
+  let currentSysTimeTag = document.getElementById("currentSystemTime");
+  let upTimeTag = document.getElementById("upTime");
+  let numOfUserTag = document.getElementById("numOfUser");
+  let loadAveTag = document.getElementById("loadAve");
+  const currentTime =
+    topInfor.summaryDisplay.uptimeAndLoadAverages.currentSystemTime;
+  const systemUptime =
+    topInfor.summaryDisplay.uptimeAndLoadAverages.systemUptime;
+  const numUsers =
+    topInfor.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers;
+  const numLoadOne =
+    topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute;
+  const numLoadTwo =
+    topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes;
+  const numLoadThree =
+    topInfor.summaryDisplay.uptimeAndLoadAverages.loadAverage
+      .lastFifteenMinutes;
+  var tcurrentSysTime = document.createElement("div");
+  tcurrentSysTime.setAttribute("id", "tcurrentSysTime");
+  currentSysTimeTag.appendChild(tcurrentSysTime);
+  document.getElementById("tcurrentSysTime").innerText = currentTime;
 
-    var tupTime = document.createElement("div");
-        tupTime.setAttribute("id", "tupTime");
-        upTimeTag.appendChild(tupTime);
-        document.getElementById("tupTime").innerText = systemUptime;
+  var tupTime = document.createElement("div");
+  tupTime.setAttribute("id", "tupTime");
+  upTimeTag.appendChild(tupTime);
+  document.getElementById("tupTime").innerText = systemUptime;
 
-    var tnumOfUsers = document.createElement("div");
-        tnumOfUsers.setAttribute("id", "tnumOfUsers");
-        numOfUserTag.appendChild(tnumOfUsers);
-        document.getElementById("tnumOfUsers").innerText = numUsers;
+  var tnumOfUsers = document.createElement("div");
+  tnumOfUsers.setAttribute("id", "tnumOfUsers");
+  numOfUserTag.appendChild(tnumOfUsers);
+  document.getElementById("tnumOfUsers").innerText = numUsers;
 
-    var tloadAve = document.createElement("div");
-        tloadAve.setAttribute("id", "tloadAve");
-        loadAveTag.appendChild(tloadAve);
-        document.getElementById("tloadAve").innerText = numLoadOne + " " + numLoadTwo + " " + numLoadThree;
-    
+  var tloadAve = document.createElement("div");
+  tloadAve.setAttribute("id", "tloadAve");
+  loadAveTag.appendChild(tloadAve);
+  document.getElementById("tloadAve").innerText =
+    numLoadOne + " " + numLoadTwo + " " + numLoadThree;
 }
+
 function loadTable(tableTag) {
   const topInfo = getTopInfo();
   loadTasks(topInfo);
@@ -131,10 +139,9 @@ function loadTable(tableTag) {
   var head = document.createElement("thead");
   head.setAttribute("id", "headtable");
   tableTag.appendChild(head);
-
   document.getElementById(
     "headtable"
-  ).innerHTML += `<tr>                               
+  ).innerHTML = `<tr>                               
                 <th id="PID">
                   PID
                   <i class="fa-solid fa-chevron-up sort-icon" ></i>     
@@ -210,6 +217,7 @@ function loadTable(tableTag) {
   var body = document.createElement("tbody");
   body.setAttribute("id", "bodytable");
   tableTag.appendChild(body);
+  document.getElementById("bodytable").innerHTML = "";
   if (sortFieldId != "none") {
     sortOrder
       ? (document.querySelector(
@@ -278,18 +286,18 @@ function loadTable(tableTag) {
 // loadTasks();
 loadTable(tableTag);
 function loadProcessInfor() {
-  document.getElementById("ttotal").remove();
-  document.getElementById("trunning").remove();
-  document.getElementById("tsleeping").remove();
-  document.getElementById("tstopped").remove();
-  document.getElementById("tzombie").remove();
-    document.getElementById("tcurrentSysTime").remove();
-    document.getElementById("tupTime").remove();
-    document.getElementById("tnumOfUsers").remove();
-    document.getElementById("tloadAve").remove();
-  while (tableTag.firstChild) {
-    tableTag.removeChild(tableTag.firstChild);
-  }
+  // document.getElementById("ttotal").remove();
+  // document.getElementById("trunning").remove();
+  // document.getElementById("tsleeping").remove();
+  // document.getElementById("tstopped").remove();
+  // document.getElementById("tzombie").remove();
+  // document.getElementById("tcurrentSysTime").remove();
+  // document.getElementById("tupTime").remove();
+  // document.getElementById("tnumOfUsers").remove();
+  // document.getElementById("tloadAve").remove();
+  // while (tableTag.firstChild) {
+  //   tableTag.removeChild(tableTag.firstChild);
+  // }
   // loadHeader();
   // loadTasks();
   loadTable(tableTag);
