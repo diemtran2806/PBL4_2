@@ -228,8 +228,9 @@ function loadTable(tableTag) {
         ).style.display = "inline-block");
   }
   for (var i = 0; i < PID.length; i++) {
+    let id = i.toString();
     document.getElementById("bodytable").innerHTML += `<tr>
-                 <td>${PID[i]}</td>
+                 <td id=${id}>${PID[i]}</td>
                  <td>${User[i]}</td>
                  <td>${PR[i]}</td>
                  <td>${NI[i]}</td>
@@ -286,21 +287,68 @@ function loadTable(tableTag) {
 // loadTasks();
 loadTable(tableTag);
 function loadProcessInfor() {
-  // document.getElementById("ttotal").remove();
-  // document.getElementById("trunning").remove();
-  // document.getElementById("tsleeping").remove();
-  // document.getElementById("tstopped").remove();
-  // document.getElementById("tzombie").remove();
-  // document.getElementById("tcurrentSysTime").remove();
-  // document.getElementById("tupTime").remove();
-  // document.getElementById("tnumOfUsers").remove();
-  // document.getElementById("tloadAve").remove();
-  // while (tableTag.firstChild) {
-  //   tableTag.removeChild(tableTag.firstChild);
-  // }
-  // loadHeader();
-  // loadTasks();
+  
   loadTable(tableTag);
+
+  //right menu
+  let contextMenu = document.getElementById("context-menu");
+
+let itemKill = document.getElementById("kill");
+let itemStop = document.getElementById("stop");
+let itemContinue = document.getElementById("continue");
+
+function clickItemMenu(row) {
+  //viet goi lenh kill, stop, continue o day
+}
+
+let rows = document.getElementsByTagName('tr');
+for(var i=1; i<rows.length; i++) {
+  rows[i].addEventListener(
+    "contextmenu",
+    (e) => {
+      e.preventDefault();
+      //vi tri x,y khi nhap chuot
+      let mouseX = e.clientX || e.touches[0].clientX;
+      let mouseY = e.clientY || e.touches[0].clientY;
+      //chieu cao va rong cua menu
+      let menuHeight = contextMenu.getBoundingClientRect().height;
+      let menuWidth = contextMenu.getBoundingClientRect().width;
+      //chieu rong chieu ngang cua mh
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      
+      if (width - mouseX <= 200) {
+        contextMenu.style.borderRadius = "5px 0 5px 5px";
+        contextMenu.style.left = width - menuWidth + "px";
+        contextMenu.style.top = mouseY + "px";
+        //ben phai phia duoi
+        if (height - mouseY <= 200) {
+          contextMenu.style.top = mouseY - menuHeight + "px";
+          contextMenu.style.borderRadius = "5px 5px 0 5px";
+        }
+      }
+      //trai
+      else {
+        contextMenu.style.borderRadius = "0 5px 5px 5px";
+        contextMenu.style.left = mouseX + "px";
+        contextMenu.style.top = mouseY + "px";
+        //trai duoi
+        if (height - mouseY <= 200) {
+          contextMenu.style.top = mouseY - menuHeight + "px";
+          contextMenu.style.borderRadius = "5px 5px 5px 0";
+        }
+      }
+      contextMenu.style.visibility = "visible";
+    },
+    { passive: false }
+  );
+}
+//click ben ngoai de tat
+document.addEventListener("click", function (e) {
+  if (!contextMenu.contains(e.target)) {
+    contextMenu.style.visibility = "hidden";
+  }
+});
 }
 
 setInterval(loadProcessInfor, 3000);
