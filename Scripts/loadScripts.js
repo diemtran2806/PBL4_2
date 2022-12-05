@@ -67,6 +67,7 @@ const getTopInfo = (() => {
     stdout.split("\n").map((item, index) => {
       if (index === 0) {
         result = item.trimStart().split(/\s+/);
+        console.log(result);
         topInfoArray.summaryDisplay.uptimeAndLoadAverages.command = result[0];
         topInfoArray.summaryDisplay.uptimeAndLoadAverages.currentSystemTime = result[2];
         topInfoArray.summaryDisplay.uptimeAndLoadAverages.systemUptime = result[4];
@@ -217,6 +218,48 @@ const getDiskInfo = (() => {
   return diskInfoArray;
 })();
 
+const killProcess = (pid) => {
+  try {
+    execSync(`kill ${pid}`, { encoding: 'utf8' });
+    // execSync(`kill -9 ${pid}`, { encoding: 'utf8' });
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+}
+
+const stopProcess = (pid) => {
+  try {
+    execSync(`kill -STOP ${pid}`, { encoding: 'utf8' });
+    // execSync(`kill -15 ${pid}`, { encoding: 'utf8' });
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+}
+
+const startProcess = (pid) => {
+  try {
+    execSync(`kill -CONT ${pid}`, { encoding: 'utf8' });
+    // execSync(`kill -18 ${pid}`, { encoding: 'utf8' });
+  } catch (err) {
+    const { status, stderr } = err;
+    if (status > 0 || (stderr && stderr.toLowerCase().includes('warning'))) {
+      console.error('Failed due to:');
+      console.error(stderr);
+      process.exit(1);
+    }
+  }
+}
+
 module.exports = {
   getCPUInfo,
   getMemoryInfo,
@@ -224,5 +267,8 @@ module.exports = {
   getTopInfo,
   getMultipleCPUInfo,
   sortFields,
+  killProcess,
+  stopProcess,
+  startProcess,
   // getMultipleCPUInfo1
 };
