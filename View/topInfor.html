@@ -104,6 +104,31 @@
         .sort-icon {
         display: none;
       }
+
+      #context-menu {
+    background-color: #ffffff;
+    color: #1f194c;
+    width: 10em;
+    padding: 0.8em 0.6em;
+    font-size: 1.3rem;
+    position: fixed;
+    visibility: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  }
+  .item {
+    padding:8px;
+    margin: 0;
+    font-size: 12px;
+    border-bottom: 1px solid rgb(146, 145, 145);
+  }
+  .item:nth-child(1) {
+    border-top: 1px solid rgb(146, 145, 145);
+  }
+  .item:hover {
+    background-color: rgba(203, 157, 255, 0.2);
+    cursor: pointer;
+  }
+
     </style>
 </head>
 <body>
@@ -127,6 +152,14 @@
     </div>
     <button id="button" onClick="showDetail()">Details</button>
     <table id="datatable" class="topinfor"></table>
+
+    <!-- right menu -->
+    <div id="context-menu">
+      <div id="kill" class="item">Kill</div>
+      <div id="stop" class="item">Stop</div>
+      <div id="continue" class="item">Continue</div>
+    </div>
+
     <script type="module" src="../Scripts/topScript.js"></script>
     <script>
       var check = false;
