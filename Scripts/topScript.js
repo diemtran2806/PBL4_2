@@ -1,7 +1,8 @@
-const { getTopInfo, sortFields } = require("../Scripts/loadScripts.js");
+const { getTopInfo, sortFields, killProcess, startProcess, stopProcess } = require("../Scripts/loadScripts.js");
 let tableTag = document.getElementById("datatable");
 let tasksTag = document.getElementById("tasks");
 
+// Sort top fields
 let isAscending = [
   true,
   true,
@@ -300,6 +301,21 @@ let itemContinue = document.getElementById("continue");
 function clickItemMenu(row) {
   //viet goi lenh kill, stop, continue o day
 }
+
+// document.getElementById("kill").addEventListener("click", function () {
+//   let pid = document.getElementById("pid").value;
+//   killProcess(pid);
+// });
+
+// document.getElementById("start").addEventListener("click", function () {
+//   let pid = document.getElementById("pid").value;
+//   startProcess(pid);
+// });
+
+// document.getElementById("stop").addEventListener("click", function () {
+//   let pid = document.getElementById("pid").value;
+//   stopProcess(pid);
+// });
 
 let rows = document.getElementsByTagName('tr');
 for(var i=1; i<rows.length; i++) {

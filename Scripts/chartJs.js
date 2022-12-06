@@ -14,15 +14,8 @@ function description() {
       ttimeup.setAttribute("id", "ttimeup");
       uptimeTag.appendChild(ttimeup);
       document.getElementById("ttimeup").innerText = timeup;
+  addData(topInfor);
 }
-
-description();
-function loadDecription() {
-    document.getElementById("tutilization").remove();
-    document.getElementById("ttimeup").remove();
-    description();
-}
-setInterval(loadDecription, 1000);
 
 const ctx = document.getElementById('myChart');
   //const {getTopInfo} = require('../Scripts/loadScripts.js');
@@ -158,8 +151,8 @@ const ctx = document.getElementById('myChart');
     x2.push("60 sec");  
   }
   addLabel();
-  function addData() {
-    var y = 100 - Number(getTopInfo().summaryDisplay.cpuStates.id.replace(',','.'));
+  function addData(topInfo) {
+    var y = 100 - Number(topInfo.summaryDisplay.cpuStates.id.replace(',','.'));
     if(chart.data.datasets[0].data.length < 61) {
         chart.data.datasets[0].data.unshift(y);
     } else {
@@ -182,5 +175,13 @@ const ctx = document.getElementById('myChart');
     }
     chart2.update();
   }
-  setInterval(addData,1000);
-  setInterval(addData2,1000);
+
+description();
+function loadDecription() {
+    document.getElementById("tutilization").remove();
+    document.getElementById("ttimeup").remove();
+    description();
+}
+setInterval(loadDecription, 1000);
+// setInterval(addData,1000);
+setInterval(addData2,1000);
