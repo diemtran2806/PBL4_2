@@ -66,37 +66,46 @@ const getTopInfo = (() => {
     const stdout = execSync(topCommand, { encoding: 'utf8' });
     stdout.split("\n").map((item, index) => {
       if (index === 0) {
-        result = item.trimStart().split(/\s+/);
-        console.log(result);
+        result = item.trimStart().split(/(?: - | up |, | user| load average: )+/);
+        // console.log(result);
         topInfoArray.summaryDisplay.uptimeAndLoadAverages.command = result[0];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.currentSystemTime = result[2];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.systemUptime = result[4];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers = result[6];
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute = result[10].slice(0, -1);
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes = result[11].slice(0, -1);
-        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes = result[12];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.currentSystemTime = result[1];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.systemUptime = result[2];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.numberOfCurrentUsers = result[3];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastOneMinute = result[4];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFiveMinutes = result[5];
+        topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes = result[6];
       }
       else if (index === 1) {
-        result =  item.split(/\s+/);
-        topInfoArray.summaryDisplay.tasks[result[2].slice(0, -1)] = result[1];
-        topInfoArray.summaryDisplay.tasks[result[4].slice(0, -1)] = result[3];
-        topInfoArray.summaryDisplay.tasks[result[6].slice(0, -1)] = result[5];
-        topInfoArray.summaryDisplay.tasks[result[8].slice(0, -1)] = result[7];
-        topInfoArray.summaryDisplay.tasks[result[10]] = result[9];
+        // result =  item.split(/\s+/);
+        result = item.trimStart().split(/(?:Tasks:| |,)+/);
+        result.shift();
+        // console.log(result);
+        topInfoArray.summaryDisplay.tasks[result[1]] = result[0];
+        topInfoArray.summaryDisplay.tasks[result[3]] = result[2];
+        topInfoArray.summaryDisplay.tasks[result[5]] = result[4];
+        topInfoArray.summaryDisplay.tasks[result[7]] = result[6];
+        topInfoArray.summaryDisplay.tasks[result[9]] = result[8];
       }
       else if (index === 2) {
-        result = item.split(/\s+/);
-        topInfoArray.summaryDisplay.cpuStates[result[2].slice(0, -1)] = result[1];
-        topInfoArray.summaryDisplay.cpuStates[result[4].slice(0, -1)] = result[3];
-        topInfoArray.summaryDisplay.cpuStates[result[6].slice(0, -1)] = result[5];
-        topInfoArray.summaryDisplay.cpuStates[result[8].slice(0, -1)] = result[7];
-        topInfoArray.summaryDisplay.cpuStates[result[10].slice(0, -1)] = result[9];
-        topInfoArray.summaryDisplay.cpuStates[result[12].slice(0, -1)] = result[11];
-        topInfoArray.summaryDisplay.cpuStates[result[14].slice(0, -1)] = result[13];
-        topInfoArray.summaryDisplay.cpuStates[result[16]] = result[15];
+        // result = item.split(/\s+/);
+        result = item.trimStart().split(/(?:%Cpu\(s\):| |us,|sy,|ni,|id,|wa,|hi,|si,|st)+/);
+        result.shift();
+        // console.log(result);
+        topInfoArray.summaryDisplay.cpuStates['us'] = result[0];
+        topInfoArray.summaryDisplay.cpuStates['sy'] = result[1];
+        topInfoArray.summaryDisplay.cpuStates['ni'] = result[2];
+        topInfoArray.summaryDisplay.cpuStates['id'] = result[3];
+        topInfoArray.summaryDisplay.cpuStates['wa'] = result[4];
+        topInfoArray.summaryDisplay.cpuStates['hi'] = result[5];
+        topInfoArray.summaryDisplay.cpuStates['si'] = result[6];
+        topInfoArray.summaryDisplay.cpuStates['st'] = result[7];
       }
       else if (index === 3) {
         result = item.split(/\s+/);
+        // result = item.trimStart().split(/(?:MiB Mem| |:|)+/);
+        // result.shift();
+        // console.log(result);
         topInfoArray.summaryDisplay.memoryUsage[result[4].slice(0, -1)] = result[3];
         topInfoArray.summaryDisplay.memoryUsage[result[6].slice(0, -1)] = result[5];
         topInfoArray.summaryDisplay.memoryUsage[result[8].slice(0, -1)] = result[7];
@@ -146,8 +155,10 @@ const sortFields = (sortField, isAscending) => {
 const getMultipleCPUInfo = () => {
   const CPUInfoArray = [];
   try {
-    execSync('top -1 -b -w 512 -n 1 > top.txt', { encoding: 'utf8' });
-    const stdout = execSync('head -n +6 top.txt | tail -n +3', { encoding: 'utf8' });
+    // execSync('top -1 -b -w 512 -n 1 > top.txt', { encoding: 'utf8' });
+    // const stdout = execSync('head -n +6 top.txt | tail -n +3', { encoding: 'utf8' });
+    const stdout = execSync("top -1 -n 1 -b -w 512 | egrep '%Cpu'", { encoding: 'utf8' });
+    console.log(stdout);
     stdout.split("\n").map((item) => {
       CPUInfoArray.push(100.0 - parseFloat((item.split(/(?:%Cpu| |:|ni,)+/)[7]).replace(",", ".")));
       CPUInfoArray.push(100.0 - parseFloat((item.split(/(?:%Cpu| |:|ni,)+/)[23]).replace(",", ".")));
@@ -198,14 +209,15 @@ const getDiskInfo = (() => {
   };
   try {
     const stdout = execSync('df -T | tail -n +2', { encoding: 'utf8' });
-    stdout.replace(/\s{2,}/g, ' ').split("\n").map((item) => {
-      diskInfoArray.Filesystem.push(item.split(" ")[0]);
-      diskInfoArray.Type.push(item.split(" ")[1]);
-      diskInfoArray.Blocks.push(item.split(" ")[2]);
-      diskInfoArray.Used.push(item.split(" ")[3]);
-      diskInfoArray.Available.push(item.split(" ")[4]);
-      diskInfoArray.UsePercent.push(item.split(" ")[5]);
-      diskInfoArray.MountedOn.push(item.split(" ")[6]);
+    stdout.split("\n").map((item) => {
+      let result = item.split(/\s+/);
+      diskInfoArray.Filesystem.push(result[0]);
+      diskInfoArray.Type.push(result[1]);
+      diskInfoArray.Blocks.push(result[2]);
+      diskInfoArray.Used.push(result[3]);
+      diskInfoArray.Available.push(result[4]);
+      diskInfoArray.UsePercent.push(result[5]);
+      diskInfoArray.MountedOn.push(result[6]);
     });
   } catch (err) {
     const { status, stderr } = err;
@@ -215,6 +227,7 @@ const getDiskInfo = (() => {
       process.exit(1);
     }
   }
+  // console.log(diskInfoArray);
   return diskInfoArray;
 })();
 
