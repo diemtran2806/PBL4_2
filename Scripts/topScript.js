@@ -1,6 +1,12 @@
-const { getTopInfo, sortFields, killProcess, startProcess, stopProcess } = require("../Scripts/loadScripts.js");
+const {
+  getTopInfo,
+  sortFields,
+  killProcess,
+  startProcess,
+  stopProcess,
+} = require("../Scripts/loadScripts.js");
 let tableTag = document.getElementById("datatable");
-let tasksTag = document.getElementById("tasks");
+let contextMenu = document.getElementById("context-menu");
 
 // Sort top fields
 let isAscending = [
@@ -19,6 +25,7 @@ let isAscending = [
 ];
 let sortFieldId = "none";
 let sortOrder = true;
+let PIDvalue;
 
 function sort(index, field) {
   sortFields(
@@ -218,7 +225,6 @@ function loadTable(tableTag) {
   var body = document.createElement("tbody");
   body.setAttribute("id", "bodytable");
   tableTag.appendChild(body);
-  document.getElementById("bodytable").innerHTML = "";
   if (sortFieldId != "none") {
     sortOrder
       ? (document.querySelector(
@@ -228,22 +234,79 @@ function loadTable(tableTag) {
           "#" + sortFieldId + " > .fa-chevron-up"
         ).style.display = "inline-block");
   }
+
   for (var i = 0; i < PID.length; i++) {
-    let id = i.toString();
-    document.getElementById("bodytable").innerHTML += `<tr>
-                 <td id=${id}>${PID[i]}</td>
-                 <td>${User[i]}</td>
-                 <td>${PR[i]}</td>
-                 <td>${NI[i]}</td>
-                 <td>${VIRT[i]}</td>
-                 <td>${RES[i]}</td>
-                 <td>${SHR[i]}</td>
-                 <td>${S[i]}</td>
-                 <td>${CPU[i]}</td>
-                 <td>${MEM[i]}</td>
-                 <td>${TIME[i]}</td>
-                 <td>${COMMAND[i]}</td>
-            </tr>`;
+    let row = document.createElement("tr");
+    row.setAttribute("data-value", `${PID[i]}`);
+
+    row.addEventListener(
+      "contextmenu",
+      (e) => {
+        e.preventDefault();
+        PIDvalue = e.target.parentNode.getAttribute("data-value");
+        console.log(PIDvalue);
+        //vi tri x,y khi nhap chuot
+        let mouseX = e.clientX || e.touches[0].clientX;
+        let mouseY = e.clientY || e.touches[0].clientY;
+        //chieu cao va rong cua menu
+        let menuHeight = contextMenu.getBoundingClientRect().height;
+        let menuWidth = contextMenu.getBoundingClientRect().width;
+        //chieu rong chieu ngang cua mh
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+
+        if (width - mouseX <= 200) {
+          contextMenu.style.borderRadius = "5px 0 5px 5px";
+          contextMenu.style.left = width - menuWidth + "px";
+          contextMenu.style.top = mouseY + "px";
+          //ben phai phia duoi
+          if (height - mouseY <= 200) {
+            contextMenu.style.top = mouseY - menuHeight + "px";
+            contextMenu.style.borderRadius = "5px 5px 0 5px";
+          }
+        }
+        //trai
+        else {
+          contextMenu.style.borderRadius = "0 5px 5px 5px";
+          contextMenu.style.left = mouseX + "px";
+          contextMenu.style.top = mouseY + "px";
+          //trai duoi
+          if (height - mouseY <= 200) {
+            contextMenu.style.top = mouseY - menuHeight + "px";
+            contextMenu.style.borderRadius = "5px 5px 5px 0";
+          }
+        }
+        contextMenu.style.visibility = "visible";
+
+        document.getElementById("kill").addEventListener("click", function () {
+          killProcess(PIDvalue);
+        });
+
+        document
+          .getElementById("continue")
+          .addEventListener("click", function () {
+            startProcess(PIDvalue);
+          });
+
+        document.getElementById("stop").addEventListener("click", function () {
+          stopProcess(PIDvalue);
+        });
+      },
+      { passive: false }
+    );
+    body.appendChild(row);
+    row.innerHTML = `<td>${PID[i]}</td>
+                  <td>${User[i]}</td>
+                  <td>${PR[i]}</td>
+                  <td>${NI[i]}</td>
+                  <td>${VIRT[i]}</td>
+                  <td>${RES[i]}</td>
+                  <td>${SHR[i]}</td>
+                  <td>${S[i]}</td>
+                  <td>${CPU[i]}</td>
+                  <td>${MEM[i]}</td>
+                  <td>${TIME[i]}</td>
+                  <td>${COMMAND[i]}</td>`;
   }
   document.getElementById("PID").onclick = function () {
     sort(0, "PID");
@@ -288,83 +351,15 @@ function loadTable(tableTag) {
 // loadTasks();
 loadTable(tableTag);
 function loadProcessInfor() {
-  
+  tableTag.removeChild(document.getElementById("bodytable"));
   loadTable(tableTag);
 
-  //right menu
-  let contextMenu = document.getElementById("context-menu");
-
-let itemKill = document.getElementById("kill");
-let itemStop = document.getElementById("stop");
-let itemContinue = document.getElementById("continue");
-
-function clickItemMenu(row) {
-  //viet goi lenh kill, stop, continue o day
-}
-
-// document.getElementById("kill").addEventListener("click", function () {
-//   let pid = document.getElementById("pid").value;
-//   killProcess(pid);
-// });
-
-// document.getElementById("start").addEventListener("click", function () {
-//   let pid = document.getElementById("pid").value;
-//   startProcess(pid);
-// });
-
-// document.getElementById("stop").addEventListener("click", function () {
-//   let pid = document.getElementById("pid").value;
-//   stopProcess(pid);
-// });
-
-let rows = document.getElementsByTagName('tr');
-for(var i=1; i<rows.length; i++) {
-  rows[i].addEventListener(
-    "contextmenu",
-    (e) => {
-      e.preventDefault();
-      //vi tri x,y khi nhap chuot
-      let mouseX = e.clientX || e.touches[0].clientX;
-      let mouseY = e.clientY || e.touches[0].clientY;
-      //chieu cao va rong cua menu
-      let menuHeight = contextMenu.getBoundingClientRect().height;
-      let menuWidth = contextMenu.getBoundingClientRect().width;
-      //chieu rong chieu ngang cua mh
-      let width = window.innerWidth;
-      let height = window.innerHeight;
-      
-      if (width - mouseX <= 200) {
-        contextMenu.style.borderRadius = "5px 0 5px 5px";
-        contextMenu.style.left = width - menuWidth + "px";
-        contextMenu.style.top = mouseY + "px";
-        //ben phai phia duoi
-        if (height - mouseY <= 200) {
-          contextMenu.style.top = mouseY - menuHeight + "px";
-          contextMenu.style.borderRadius = "5px 5px 0 5px";
-        }
-      }
-      //trai
-      else {
-        contextMenu.style.borderRadius = "0 5px 5px 5px";
-        contextMenu.style.left = mouseX + "px";
-        contextMenu.style.top = mouseY + "px";
-        //trai duoi
-        if (height - mouseY <= 200) {
-          contextMenu.style.top = mouseY - menuHeight + "px";
-          contextMenu.style.borderRadius = "5px 5px 5px 0";
-        }
-      }
-      contextMenu.style.visibility = "visible";
-    },
-    { passive: false }
-  );
-}
-//click ben ngoai de tat
-document.addEventListener("click", function (e) {
-  if (!contextMenu.contains(e.target)) {
-    contextMenu.style.visibility = "hidden";
-  }
-});
+  //click ben ngoai de tat
+  document.addEventListener("click", function (e) {
+    if (!contextMenu.contains(e.target)) {
+      contextMenu.style.visibility = "hidden";
+    }
+  });
 }
 
 setInterval(loadProcessInfor, 3000);
