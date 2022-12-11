@@ -130,8 +130,12 @@ function loadHeader(topInfor) {
 
 function loadTable(tableTag) {
   const topInfo = getTopInfo();
+
+  // load tasks summary , uptime and load averages summary (header)
   loadTasks(topInfo);
   loadHeader(topInfo);
+
+  // load table fields
   const PID = topInfo.fields.PID;
   const User = topInfo.fields.User;
   const PR = topInfo.fields.PR;
@@ -144,84 +148,40 @@ function loadTable(tableTag) {
   const MEM = topInfo.fields.MEMpercent;
   const TIME = topInfo.fields.Time;
   const COMMAND = topInfo.fields.Command;
-  var head = document.createElement("thead");
+
+  // header table
+  let head = document.createElement("thead");
   head.setAttribute("id", "headtable");
   tableTag.appendChild(head);
-  document.getElementById(
-    "headtable"
-  ).innerHTML = `<tr>                               
-                <th id="PID">
-                  PID
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="USER">
-                  User
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="PR">
-                  PR
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="NI">
-                  NI
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="VIRT">
-                  VIRT
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="RES">
-                  RES
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="SHR">
-                  SHR
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="S">
-                  S
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="percentCPU">
-                  %CPU
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="percentMEM">
-                  %MEM
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="TIME">
-                  TIME+
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>
-                
-                <th id="COMMAND">
-                  COMMAND
-                  <i class="fa-solid fa-chevron-up sort-icon" ></i>     
-                  <i class="fa-solid fa-chevron-down sort-icon"></i>
-                </th>                
-        </tr>`;
+  let row = document.createElement("tr");
+
+  topInfo.fieldNames.forEach((field, index) => {
+    // add header field
+    let th = document.createElement("th");
+    th.setAttribute("class", "head_field");
+    th.setAttribute(
+      "id",
+      field.replace("%", "percent").replace("TIME+", "TIME")
+    );
+    row.appendChild(th);
+    th.innerText = field;
+
+    // add sort icon
+    let upIcon = document.createElement("i");
+    upIcon.setAttribute("class", "fa-solid fa-chevron-up sort-icon");
+    th.appendChild(upIcon);
+    let downIcon = document.createElement("i");
+    downIcon.setAttribute("class", "fa-solid fa-chevron-down sort-icon");
+    th.appendChild(downIcon);
+
+    // add sort event
+    th.addEventListener("click", () => {
+      sort(index, field.replace("%", "percent").replace("TIME+", "TIME"));
+    });
+  });
+  head.appendChild(row);
+
+  // body table
   var body = document.createElement("tbody");
   body.setAttribute("id", "bodytable");
   tableTag.appendChild(body);
@@ -235,66 +195,79 @@ function loadTable(tableTag) {
         ).style.display = "inline-block");
   }
 
-  for (var i = 0; i < PID.length; i++) {
-    let row = document.createElement("tr");
-    row.setAttribute("data-value", `${PID[i]}`);
-
-    row.addEventListener(
-      "contextmenu",
-      (e) => {
-        e.preventDefault();
-        PIDvalue = e.target.parentNode.getAttribute("data-value");
-        console.log(PIDvalue);
-        //vi tri x,y khi nhap chuot
-        let mouseX = e.clientX || e.touches[0].clientX;
-        let mouseY = e.clientY || e.touches[0].clientY;
-        //chieu cao va rong cua menu
-        let menuHeight = contextMenu.getBoundingClientRect().height;
-        let menuWidth = contextMenu.getBoundingClientRect().width;
-        //chieu rong chieu ngang cua mh
-        let width = window.innerWidth;
-        let height = window.innerHeight;
-
-        if (width - mouseX <= 200) {
-          contextMenu.style.borderRadius = "5px 0 5px 5px";
-          contextMenu.style.left = width - menuWidth + "px";
-          contextMenu.style.top = mouseY + "px";
-          //ben phai phia duoi
-          if (height - mouseY <= 200) {
-            contextMenu.style.top = mouseY - menuHeight + "px";
-            contextMenu.style.borderRadius = "5px 5px 0 5px";
+  for (var i = 0; i < PID.length - 1; i++) {
+    
+    // topInfo.fields.forEach((field, index) => {
+      let row = document.createElement("tr");
+      // row.setAttribute("data-value", `${field['PID']}`);
+      // if (PIDvalue == field['PID']) row.style.backgroundColor = "rgba(0,0,0,0.2)";
+      row.setAttribute("data-value", `${PID[i]}`);
+      if (PIDvalue == PID[i]) row.style.backgroundColor = "rgba(0,0,0,0.2)";
+      body.appendChild(row);
+  
+      row.addEventListener(
+        "contextmenu",
+        (e) => {
+          e.preventDefault();
+          PIDvalue = e.target.parentNode.getAttribute("data-value");
+          e.target.parentNode.style.backgroundColor = "rgba(0,0,0,0.2)";
+          console.log(PIDvalue);
+          //vi tri x,y khi nhap chuot
+          let mouseX = e.clientX || e.touches[0].clientX;
+          let mouseY = e.clientY || e.touches[0].clientY;
+          //chieu cao va rong cua menu
+          let menuHeight = contextMenu.getBoundingClientRect().height;
+          let menuWidth = contextMenu.getBoundingClientRect().width;
+          //chieu rong chieu ngang cua mh
+          let width = window.innerWidth;
+          let height = window.innerHeight;
+  
+          if (width - mouseX <= 200) {
+            contextMenu.style.borderRadius = "5px 0 5px 5px";
+            contextMenu.style.left = width - menuWidth + "px";
+            contextMenu.style.top = mouseY + "px";
+            //ben phai phia duoi
+            if (height - mouseY <= 200) {
+              contextMenu.style.top = mouseY - menuHeight + "px";
+              contextMenu.style.borderRadius = "5px 5px 0 5px";
+            }
           }
-        }
-        //trai
-        else {
-          contextMenu.style.borderRadius = "0 5px 5px 5px";
-          contextMenu.style.left = mouseX + "px";
-          contextMenu.style.top = mouseY + "px";
-          //trai duoi
-          if (height - mouseY <= 200) {
-            contextMenu.style.top = mouseY - menuHeight + "px";
-            contextMenu.style.borderRadius = "5px 5px 5px 0";
+          //trai
+          else {
+            contextMenu.style.borderRadius = "0 5px 5px 5px";
+            contextMenu.style.left = mouseX + "px";
+            contextMenu.style.top = mouseY + "px";
+            //trai duoi
+            if (height - mouseY <= 200) {
+              contextMenu.style.top = mouseY - menuHeight + "px";
+              contextMenu.style.borderRadius = "5px 5px 5px 0";
+            }
           }
-        }
-        contextMenu.style.visibility = "visible";
-
-        document.getElementById("kill").addEventListener("click", function () {
-          killProcess(PIDvalue);
-        });
-
-        document
-          .getElementById("continue")
-          .addEventListener("click", function () {
-            startProcess(PIDvalue);
+          contextMenu.style.visibility = "visible";
+  
+          document.getElementById("kill").addEventListener("click", function () {
+            killProcess(PIDvalue);
           });
-
-        document.getElementById("stop").addEventListener("click", function () {
-          stopProcess(PIDvalue);
-        });
-      },
-      { passive: false }
-    );
-    body.appendChild(row);
+  
+          document
+            .getElementById("continue")
+            .addEventListener("click", function () {
+              startProcess(PIDvalue);
+            });
+  
+          document.getElementById("stop").addEventListener("click", function () {
+            stopProcess(PIDvalue);
+          });
+        },
+        { passive: false }
+      );
+      // console.log(field);
+    //   Object.keys(field).forEach(function(key, index) {
+    //     let td = document.createElement("td");
+    //     row.appendChild(td);
+    //     td.innerText = field[key];
+    //   });
+    // });
     row.innerHTML = `<td>${PID[i]}</td>
                   <td>${User[i]}</td>
                   <td>${PR[i]}</td>
@@ -307,50 +280,13 @@ function loadTable(tableTag) {
                   <td>${MEM[i]}</td>
                   <td>${TIME[i]}</td>
                   <td>${COMMAND[i]}</td>`;
+    
   }
-  document.getElementById("PID").onclick = function () {
-    sort(0, "PID");
-  };
-  document.getElementById("USER").onclick = function () {
-    sort(1, "USER");
-  };
-  document.getElementById("PR").onclick = function () {
-    sort(2, "PR");
-  };
-  document.getElementById("NI").onclick = function () {
-    sort(3, "NI");
-  };
-  document.getElementById("VIRT").onclick = function () {
-    sort(4, "VIRT");
-  };
-  document.getElementById("RES").onclick = function () {
-    sort(5, "RES");
-  };
-  document.getElementById("SHR").onclick = function () {
-    sort(6, "SHR");
-  };
-  document.getElementById("S").onclick = function () {
-    sort(7, "S");
-  };
-  document.getElementById("percentCPU").onclick = function () {
-    sort(8, "percentCPU");
-  };
-  document.getElementById("percentMEM").onclick = function () {
-    sort(9, "percentMEM");
-  };
-  document.getElementById("TIME").onclick = function () {
-    sort(10, "TIME");
-  };
-  document.getElementById("COMMAND").onclick = function () {
-    sort(11, "COMMAND");
-  };
 }
 
-//load lan dau
-// loadHeader();
-// loadTasks();
 loadTable(tableTag);
 function loadProcessInfor() {
+  tableTag.removeChild(document.getElementById("headtable"));
   tableTag.removeChild(document.getElementById("bodytable"));
   loadTable(tableTag);
 
@@ -358,8 +294,9 @@ function loadProcessInfor() {
   document.addEventListener("click", function (e) {
     if (!contextMenu.contains(e.target)) {
       contextMenu.style.visibility = "hidden";
+      PIDvalue = "";
     }
   });
 }
 
-setInterval(loadProcessInfor, 3000);
+setInterval(loadProcessInfor, 1000);

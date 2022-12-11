@@ -1,4 +1,6 @@
 const { execSync } = require("child_process");
+const os = require('os');
+const cpuCount = os.cpus().length;
 
 function getInfoWithNameAndValue(command) {
   const infoArray = {
@@ -45,6 +47,8 @@ const getTopInfo = (() => {
       memoryUsage: {},
       swapUsage: {}
     },
+    fieldNames: [],
+    // fields:[]
     fields: {
       PID: [],
       User: [],
@@ -77,7 +81,6 @@ const getTopInfo = (() => {
         topInfoArray.summaryDisplay.uptimeAndLoadAverages.loadAverage.lastFifteenMinutes = result[6];
       }
       else if (index === 1) {
-        // result =  item.split(/\s+/);
         result = item.trimStart().split(/(?:Tasks:| |,)+/);
         result.shift();
         // console.log(result);
@@ -88,7 +91,6 @@ const getTopInfo = (() => {
         topInfoArray.summaryDisplay.tasks[result[9]] = result[8];
       }
       else if (index === 2) {
-        // result = item.split(/\s+/);
         result = item.trimStart().split(/(?:%Cpu\(s\):| |us,|sy,|ni,|id,|wa,|hi,|si,|st)+/);
         result.shift();
         // console.log(result);
@@ -110,7 +112,9 @@ const getTopInfo = (() => {
         topInfoArray.summaryDisplay.memoryUsage[result[6].slice(0, -1)] = result[5];
         topInfoArray.summaryDisplay.memoryUsage[result[8].slice(0, -1)] = result[7];
         topInfoArray.summaryDisplay.memoryUsage[result[10]] = result[9];
-        topInfoArray.summaryDisplay.memoryUsage.usedPercent = parseFloat(topInfoArray.summaryDisplay.memoryUsage.used.replace(",", ".")) * 100 / parseFloat(topInfoArray.summaryDisplay.memoryUsage.total.replace(",", "."))
+        topInfoArray.summaryDisplay.memoryUsage.usedPercent = 
+          parseFloat(topInfoArray.summaryDisplay.memoryUsage.used.replace(",", ".")) 
+          * 100 / parseFloat(topInfoArray.summaryDisplay.memoryUsage.total.replace(",", "."))
       }
       else if (index === 4) {
         result = item.split(/\s+/);
@@ -119,8 +123,20 @@ const getTopInfo = (() => {
         topInfoArray.summaryDisplay.swapUsage[result[7].slice(0, -1)] = result[6];
         topInfoArray.summaryDisplay.swapUsage[result[9].concat(result[10])] = result[8];
       }
+      else if (index === 6) {
+        result = item.split(/\s+/);
+        result.shift();
+        result.map((item) => {
+          topInfoArray.fieldNames.push(item);
+        });
+      }
       else if (index > 6) {
         result = item.trimStart().split(/\s+/);
+        // let obj = {};
+        // result.map((item, index) => {
+        //   obj[topInfoArray.fieldNames[index]] = item;
+        // });
+        // topInfoArray.fields.push(obj);
         topInfoArray.fields.PID.push(result[0]);
         topInfoArray.fields.User.push(result[1]);
         topInfoArray.fields.PR.push(result[2]);
@@ -155,13 +171,12 @@ const sortFields = (sortField, isAscending) => {
 const getMultipleCPUInfo = () => {
   const CPUInfoArray = [];
   try {
-    // execSync('top -1 -b -w 512 -n 1 > top.txt', { encoding: 'utf8' });
-    // const stdout = execSync('head -n +6 top.txt | tail -n +3', { encoding: 'utf8' });
     const stdout = execSync("top -1 -n 1 -b -w 512 | egrep '%Cpu'", { encoding: 'utf8' });
-    console.log(stdout);
     stdout.split("\n").map((item) => {
-      CPUInfoArray.push(100.0 - parseFloat((item.split(/(?:%Cpu| |:|ni,)+/)[7]).replace(",", ".")));
-      CPUInfoArray.push(100.0 - parseFloat((item.split(/(?:%Cpu| |:|ni,)+/)[23]).replace(",", ".")));
+      let result = item.split(/(?:%Cpu| |:|us,|sy,|ni,|id,|wa,|hi,|si,|st)+/);
+      // console.log(result);
+      CPUInfoArray.push(100.0 - parseFloat((result[5]).replace(",", ".")));
+      CPUInfoArray.push(100.0 - parseFloat((result[14]).replace(",", ".")));
     });
     
   } catch (err) {
@@ -279,6 +294,7 @@ module.exports = {
   getDiskInfo,
   getTopInfo,
   getMultipleCPUInfo,
+  cpuCount,
   sortFields,
   killProcess,
   stopProcess,

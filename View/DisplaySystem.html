@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      body {
-        font-family: "Poppins", sans-serif;
-      }
-      .chart-title {
-        font-size: 14px;
-        font-weight: 600;
-        color: #666;
-        margin-bottom: 12px;
-        padding-left: 12px;
-      }
-      .detail {
-        display: flex;
-        justify-content: space-between;
-        padding: 24px;
-        margin-bottom: 32px;
-      }
-      .desc {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 6px;
-      }
-      #tulitization {
-        color: #333;
-      }
+          body {
+            font-family: "Poppins", sans-serif;
+          }
+          .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 12px;
+            padding-left: 12px;
+          }
+          .detail {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px;
+            margin-bottom: 32px;
+          }
+          .desc {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+          }
+          #tulitization {
+            color: #333;
+          }
     </style>
-</head>
-<body>
-    <div style="position: relative; height:70vh; width:95vw">
-        <canvas id="myChart"></canvas>
+  </head>
+  <body>
+    <div style="position: relative; height: 70vh; width: 95vw">
+      <canvas id="myChart"></canvas>
     </div>
     <div class="detail">
-        <div id="utilization">
-          <div class="desc">Utilization</div>
-        </div>
-        <div id="uptime">
-          <div class="desc">Up Time</div>
-        </div>
+      <div id="utilization">
+        <div class="desc">Utilization</div>
+      </div>
+      <div id="uptime">
+        <div class="desc">Up Time</div>
+      </div>
     </div>
     <div class="chart-title">CPU History</div>
-    <div style="position: relative; height:70vh; width:95vw">
-        <canvas id="myChart2"></canvas>
-      </div>
+    <div style="position: relative; height: 70vh; width: 95vw">
+      <canvas id="myChart2"></canvas>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type ="module" src="../Scripts/topScript.js"></script>
-    <script type ="module" src="../Scripts/chartJs.js"></script>
-
-</body>
+    <script type="module" src="../Scripts/chartJs.js"></script>
+  </body>
 </html>
