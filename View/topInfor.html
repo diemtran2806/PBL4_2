@@ -15,129 +15,140 @@
     />
     <title>Document</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Poppins", sans-serif;
-        }
-        .topinfor{
-            visibility : hidden;
-            background-color: rgba(127, 3, 199, 0.08);
-            font-weight: 400;
-            font-size: 14px;
-            width: 100%;
-            /* display: none; */
-        }
-        .topinfor td{
-            padding: 8px;
-            width: 8.3%;
-        }
-        .topinfor tr:nth-child(even){background-color: rgba(127, 3, 199, 0.06);}
-        .topinfor tr:hover {
-            background-color: rgba(127, 3, 199, 0.15);
-        }
-        .data {
-            justify-content: left;
-        }
-        .topinfor th {
-            font-weight: 600;
-            background-color: rgba(127, 3, 199, 0.15);;
-            padding: 10px;
-            color: rgba(102, 103, 171, 0.986);
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        .tasks {
-            width: 100%;
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
-        .title{
-            width: 100%;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 600;
-            color:rgba(102, 103, 171, 0.986);
-            margin-bottom: 12px;
-            background-color: rgba(127, 3, 199, 0.06);
-        }
-        .detailTasks {
-            display: flex;
-            justify-content: space-around;
-        }
-        .title-tasks span {
-            color: rgb(63, 2, 121);
-            font-size: 16px;
-            margin-bottom: 12px;
-            line-height: 24px;
-        }
-        button {
-            border: none;
-            background-color: rgb(63, 2, 121);
-            color: #fff;
-            padding: 12px 24px 12px 24px;
-            margin-top: 12px;
-            text-align: center;
-            border-radius: 2px;
-            margin-bottom: 12px;
-        }
-        button:hover {
-            cursor: pointer;
-            background-color: rgb(134, 17, 243);
-        }
-        .detailHeader {
-            display: flex;
-            justify-content: space-around;
-            color: rgba(102, 103, 171, 0.986);
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 24px;
-            width: 100%;
-            padding: 14px;
-            text-align: center;
-            background-color: rgba(127, 3, 199, 0.08);
-        }
-        .title-header span{
-            font-weight: 500;
-        }
-        .sort-icon {
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      .topinfor {
+        visibility: hidden;
+        background-color: rgba(127, 3, 199, 0.08);
+        font-weight: 400;
+        font-size: 14px;
+        width: 100%;
+        /* display: none; */
+      }
+      .topinfor td {
+        padding: 8px;
+        width: 8.3%;
+      }
+      .topinfor tr:nth-child(even) {
+        background-color: rgba(127, 3, 199, 0.06);
+      }
+      .topinfor tr:hover {
+        background-color: rgba(127, 3, 199, 0.15);
+      }
+      .topinfor thead tr:hover {
+        background-color: transparent;
+      }
+      .data {
+        justify-content: left;
+      }
+      .topinfor th {
+        font-weight: 600;
+        background-color: rgba(127, 3, 199, 0.15);
+        padding: 10px;
+        color: rgba(102, 103, 171, 0.986);
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .tasks {
+        width: 100%;
+        margin-bottom: 12px;
+        font-weight: 400;
+      }
+      .title {
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: rgba(102, 103, 171, 0.986);
+        margin-bottom: 12px;
+        background-color: rgba(127, 3, 199, 0.06);
+      }
+      .detailTasks {
+        display: flex;
+        justify-content: space-around;
+      }
+      .title-tasks span {
+        color: rgb(63, 2, 121);
+        font-size: 16px;
+        margin-bottom: 12px;
+        line-height: 24px;
+      }
+      button {
+        border: none;
+        background-color: rgb(63, 2, 121);
+        color: #fff;
+        padding: 12px 24px 12px 24px;
+        margin-top: 12px;
+        text-align: center;
+        border-radius: 2px;
+        margin-bottom: 12px;
+      }
+      button:hover {
+        cursor: pointer;
+        background-color: rgb(134, 17, 243);
+      }
+      .detailHeader {
+        display: flex;
+        justify-content: space-around;
+        color: rgba(102, 103, 171, 0.986);
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 24px;
+        width: 100%;
+        padding: 14px;
+        text-align: center;
+        background-color: rgba(127, 3, 199, 0.08);
+      }
+      .title-header span {
+        font-weight: 500;
+      }
+      head_field:hover {
+        cursor: default;
+      }
+      .sort-icon {
         display: none;
       }
-
       #context-menu {
-    background-color: #ffffff;
-    color: #1f194c;
-    width: 10em;
-    padding: 0.8em 0.6em;
-    font-size: 1.3rem;
-    position: fixed;
-    visibility: hidden;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  }
-  .item {
-    padding:8px;
-    margin: 0;
-    font-size: 12px;
-    border-bottom: 1px solid rgb(146, 145, 145);
-  }
-  .item:nth-child(1) {
-    border-top: 1px solid rgb(146, 145, 145);
-  }
-  .item:hover {
-    background-color: rgba(203, 157, 255, 0.2);
-    cursor: pointer;
-  }
-
+        background-color: #ffffff;
+        color: #1f194c;
+        width: 10em;
+        padding: 0.8em 0.6em;
+        font-size: 1.3rem;
+        position: fixed;
+        visibility: hidden;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      }
+      .item {
+        padding: 8px;
+        margin: 0;
+        font-size: 12px;
+        border-bottom: 1px solid rgb(146, 145, 145);
+      }
+      .item:nth-child(1) {
+        border-top: 1px solid rgb(146, 145, 145);
+      }
+      .item:hover {
+        background-color: rgba(203, 157, 255, 0.2);
+        cursor: pointer;
+      }
     </style>
-</head>
-<body>
-        <div class="detailHeader">
-            <div id="currentSystemTime" class="title-header"><span>Current System Time:</span></div>
-            <div id="upTime" class="title-header"><span>Up Time: </span></div>
-            <div id="numOfUser" class="title-header"><span>Number of Users:</span></div>
-            <div id="loadAve" class="title-header"><span>Load Averages: </span></div>
-        </div>
+  </head>
+  <body>
+    <div class="detailHeader">
+      <div id="currentSystemTime" class="title-header">
+        <span>Current System Time:</span>
+      </div>
+      <div id="upTime" class="title-header"><span>Up Time: </span></div>
+      <div id="numOfUser" class="title-header">
+        <span>Number of Users:</span>
+      </div>
+      <div id="loadAve" class="title-header"><span>Load Averages: </span></div>
+    </div>
     <div id="tasks" class="tasks">
       <div class="title">TASKS</div>
       <div class="detailTasks">
@@ -165,10 +176,10 @@
       var check = false;
       function showDetail() {
         if (check === false) {
-          document.getElementById("datatable").style.visibility = 'visible';
+          document.getElementById("datatable").style.visibility = "visible";
           check = true;
         } else {
-          document.getElementById("datatable").style.visibility = 'hidden';
+          document.getElementById("datatable").style.visibility = "hidden";
           check = false;
         }
       }
