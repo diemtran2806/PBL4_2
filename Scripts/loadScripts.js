@@ -174,9 +174,9 @@ const getMultipleCPUInfo = () => {
     const stdout = execSync("top -1 -n 1 -b -w 512 | egrep '%Cpu'", { encoding: 'utf8' });
     stdout.split("\n").map((item) => {
       let result = item.split(/(?:%Cpu| |:|us,|sy,|ni,|id,|wa,|hi,|si,|st)+/);
-      // console.log(result);
+       console.log(result);
       CPUInfoArray.push(100.0 - parseFloat((result[5]).replace(",", ".")));
-      CPUInfoArray.push(100.0 - parseFloat((result[14]).replace(",", ".")));
+      if(result.length > 14) CPUInfoArray.push(100.0 - parseFloat((result[14]).replace(",", ".")));
     });
     
   } catch (err) {
@@ -187,7 +187,7 @@ const getMultipleCPUInfo = () => {
       process.exit(1);
     }
   }
-  // console.log(CPUInfoArray);
+   console.log(CPUInfoArray);
   return CPUInfoArray;
 };
 

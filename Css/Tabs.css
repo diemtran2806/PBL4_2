@@ -15,16 +15,7 @@ body {
   position: relative;
   width: 100%;
 }
-/* .tabs .line {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 6px;
-  border-radius: 15px;
-  background-color: #c23564;
-  transition: all 0.2s ease;
-} */
+
 .tab-item {
   display: flex;
   /* min-width: 80px; */

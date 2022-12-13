@@ -238,13 +238,13 @@ function addData2() {
   if (chart2.data.datasets[0].data.length < 61) {
     for (let i = 0; i < cpuCount; i++) {
       chart2.data.datasets[i].data.unshift(y[i]);
-      chart2.data.datasets[i].label = `CPU${i + 1} (${y[i].toPrecision(4)}%)`;
+      chart2.data.datasets[i].label = `CPU${i + 1} (${y[i]?.toPrecision(4)}%)`;
     }
   } else {
     for (let i = 0; i < cpuCount; i++) {
       chart2.data.datasets[i].data.pop();
       chart2.data.datasets[i].data.unshift(y[i]);      
-      chart2.data.datasets[i].label = `CPU${i + 1} (${y[i].toPrecision(4)}%)`;
+      chart2.data.datasets[i].label = `CPU${i + 1} (${y[i]?.toPrecision(4)}%)`;
     }
   }
   chart2.update();
