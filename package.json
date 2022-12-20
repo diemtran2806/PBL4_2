@@ -21,6 +21,6 @@
   },
   "dependencies": {
     "chart.js": "^4.0.1",
-    "sass": "^1.55.0"
+    "sass": "^1.57.1"
   }
 }
