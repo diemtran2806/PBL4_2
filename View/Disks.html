@@ -25,10 +25,13 @@
             font-family: "Poppins", sans-serif;
         }
         .disksdata{
-            background-color: rgba(127, 3, 199, 0.08);
+            background-color: rgba(140, 1, 220, 0.08);
             font-weight: 400;
             font-size: 14px;
             width: 100%;
+        }
+        tr {
+            background-color: rgba(144, 1, 227, 0.08);
         }
         .disksdata td{
             padding: 8px;
@@ -43,7 +46,7 @@
         }
         .disksdata th {
             font-weight: 600;
-            background-color: rgba(127, 3, 199, 0.15);;
+            background-color: rgba(127, 3, 199, 0.15);
             padding: 10px;
             color: rgba(102, 103, 171, 0.986);
             align-items: center;
@@ -69,10 +72,11 @@
 <body>
     <div class="title">
         <i class="title-icon fa-solid fa-circle-info"></i>
-        <div class="title-content">Information Of Disks</div>
+        <div class="title-content">Information Of File Systems</div>
     </div>
     <table id="disksdata" class="disksdata">
         <thead id="headDisks"></thead>
+        <tbody id="bodyDisks"></tbody>
     </table>
     <script type="module" src="../Scripts/disksScript.js"></script>
   </body>

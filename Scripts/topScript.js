@@ -200,9 +200,9 @@ function loadTable(tableTag) {
     // topInfo.fields.forEach((field, index) => {
       let row = document.createElement("tr");
       // row.setAttribute("data-value", `${field['PID']}`);
-      // if (PIDvalue == field['PID']) row.style.backgroundColor = "rgba(0,0,0,0.2)";
+      // if (PIDvalue == field['PID']) row.style.backgroundColor = "rgba(144, 1, 227, 0.08)";
       row.setAttribute("data-value", `${PID[i]}`);
-      if (PIDvalue == PID[i]) row.style.backgroundColor = "rgba(0,0,0,0.2)";
+      if (PIDvalue == PID[i]) row.style.backgroundColor = "rgba(144, 1, 227, 0.2)";
       body.appendChild(row);
   
       row.addEventListener(
@@ -210,7 +210,7 @@ function loadTable(tableTag) {
         (e) => {
           e.preventDefault();
           PIDvalue = e.target.parentNode.getAttribute("data-value");
-          e.target.parentNode.style.backgroundColor = "rgba(0,0,0,0.2)";
+          e.target.parentNode.style.backgroundColor = "rgba(144, 1, 227, 0.2)";
           console.log(PIDvalue);
           //vi tri x,y khi nhap chuot
           let mouseX = e.clientX || e.touches[0].clientX;

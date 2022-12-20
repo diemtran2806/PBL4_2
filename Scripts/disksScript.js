@@ -8,9 +8,9 @@ const Available = getDiskInfo.Available;
 const UsePercent = getDiskInfo.UsePercent;
 
 document.getElementById(
-    "headDisks"
-  ).innerHTML += `<tr>                               
-                <th>Files System</th>
+  "headDisks"
+).innerHTML += `<tr>                               
+                <th>Device</th>
                 <th>Type</th>
                 <th>Total</th>     
                 <th>Used</th>     
@@ -18,10 +18,9 @@ document.getElementById(
                 <th>Used Percent</th>                   
         </tr>`;
 
-for(var i=0; i<FileSystem.length-1; i++) {
-        let id = "b"+i.toString()
-        document.getElementById("disksdata").innerHTML += 
-        `<tr>
+for (var i = 0; i < FileSystem.length - 1; i++) {
+  let id = "b" + i.toString();
+  document.getElementById("bodyDisks").innerHTML += `<tr>
              <td width="20%">${FileSystem[i]}</td>
              <td width="10%">${Type[i]}</td>
              <td width="10%">${Blocks[i]}</td>
@@ -29,9 +28,9 @@ for(var i=0; i<FileSystem.length-1; i++) {
              <td width="10%">${Available[i]}</td>
              <td width="40%">
                 <div class="w3-light-grey">
-                    <div class="w3-container w3-purple w3-center" id =${id}>${UsePercent[i]}</div>
+                    <div class="w3-container w3-deep-purple w3-center" id =${id}>${UsePercent[i]}</div>
                 </div>
              </td>
         </tr>`;
-        document.getElementById(id).style.width = UsePercent[i];
+  document.getElementById(id).style.width = UsePercent[i];
 }
