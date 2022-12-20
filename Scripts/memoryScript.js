@@ -63,9 +63,10 @@ function addLabel() {
 }
 
 addLabel();
+addData();
 function addData() {
   let y = Number(getTopInfo().summaryDisplay.memoryUsage.usedPercent);
-  console.log(getTopInfo().summaryDisplay.memoryUsage.usedPercent);
+  // console.log(getTopInfo().summaryDisplay.memoryUsage.usedPercent);
   if (chart.data.datasets[0].data.length < 61) {
     chart.data.datasets[0].data.unshift(y);
     chart.data.datasets[0].label = `Memory (${y.toPrecision(4)}%)`;
