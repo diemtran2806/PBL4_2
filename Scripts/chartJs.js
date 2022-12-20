@@ -8,12 +8,12 @@ function description() {
   const topInfor = getTopInfo();
   let utilizationTag = document.getElementById("utilization");
   let uptimeTag = document.getElementById("uptime");
-  const utilization = topInfor.summaryDisplay.cpuStates.id;
+  const utilization = 100 - Number(topInfor.summaryDisplay.cpuStates.id.replace(",", "."));
   const timeup = topInfor.summaryDisplay.uptimeAndLoadAverages.systemUptime;
   let tutilization = document.createElement("div");
   tutilization.setAttribute("id", "tutilization");
   utilizationTag.appendChild(tutilization);
-  document.getElementById("tutilization").innerText = utilization + "%";
+  document.getElementById("tutilization").innerText = utilization.toPrecision(4) + "%";
   let ttimeup = document.createElement("div");
   ttimeup.setAttribute("id", "ttimeup");
   uptimeTag.appendChild(ttimeup);
@@ -127,81 +127,6 @@ let chart2 = (() => {
     },
   });
 })();
-// chart2 = new Chart(ctxx, {
-//   type: "line",
-//   data: {
-//     labels: x2,
-//     datasets: datasets,
-//   },
-//   // data: {
-//   //   labels: x2,
-//   //   datasets: [
-//   //     {
-//   //       label: "CPU1 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU2 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU3 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU4 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU5 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU6 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU7 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //     {
-//   //       label: "CPU8 (%)",
-//   //       data: [],
-//   //       borderWidth: 2,
-//   //     },
-//   //   ],
-//   // },
-//   options: {
-//     maintainAspectRatio: false,
-//     animation: false,
-//     scales: {
-//       x: {
-//         beginAtZero: true,
-//       },
-//       y: {
-//         beginAtZero: true,
-//         min: 0,
-//         max: 100,
-//       },
-//     },
-//     elements: {
-//       point: {
-//         radius: 0,
-//         borderWidth: 0,
-//       },
-//       line: {
-//         tension: 0.3,
-//       },
-//     },
-//   },
-// });
 
 function addLabel() {
   for (let i = 0; i <= 59; i++) {

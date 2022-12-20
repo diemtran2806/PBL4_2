@@ -3,7 +3,7 @@ const { getMemoryInfo, getTopInfo } = require("../Scripts/loadScripts.js");
 const MemmoryName = getMemoryInfo.name;
 const MemmoryValue = getMemoryInfo.value;
 
-for (let i = 0; i < MemmoryName.length; i++) {
+for (let i = 0; i < MemmoryName.length - 1; i++) {
   document.getElementById("memory").innerHTML += `<tr>
              <td width="40%">${MemmoryName[i]}</td>
              <td width="60%">${MemmoryValue[i]}</td>
