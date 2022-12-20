@@ -5,7 +5,7 @@
       const tabs = $$(".tab-item");
 
       const tabActive = $(".tab-item.active");
-      const line = $(".tabs .line");
+      const line = $(".tabs");
       line.style.left = tabActive.offsetLeft + "px";
       line.style.width = tabActive.offsetWidth + "px";
       tabs.forEach((tab, index) => {
